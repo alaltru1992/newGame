@@ -1,20 +1,8 @@
 
-'use strict'
-
-class Tree{
-    create(){
-        let graph = new PIXI.Graphics();
-        graph.beginFill(0xFF3300);
-        graph.lineStyle(2, 0xffd900, 1);
-        graph.moveTo(50,50);
-        graph.lineTo(50,100);
-        graph.lineTo(70,100);
-        graph.lineTo(70,50);
-        return graph;
-    }
+'use strict';
 
 
-}
+
 
 window.onload = function(){
 
@@ -26,14 +14,25 @@ window.onload = function(){
     background.width = app.renderer.width;
     background.height = app.renderer.height;
     app.stage.addChild(background);
-    let tree = new Tree.create();
+
+
+    let tree =   Tree.create();
+
     app.stage.addChild(tree);
-    /*  let graph = new PIXI.Graphics();
-      graph.beginFill(0xFF3300);
-      graph.lineStyle(2, 0xffd900, 1);
-      graph.moveTo(50,50);
-      graph.lineTo(50,100);
-      graph.lineTo(70,100);
-      graph.lineTo(70,50);
-      app.stage.addChild(graph);*/
-}
+    window.addEventListener("keydown",(e)=> {
+        if(e.keyCode === 39) {
+            rightMove();
+        }
+    });
+
+
+
+    function rightMove(obj){
+        app.stage.addChild(obj)
+        app.ticker.add( function(left){
+            obj.x -= 2*left;
+        })
+        return obj;
+    }
+
+};
