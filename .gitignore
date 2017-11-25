@@ -1,3 +1,4 @@
 .idea/
 dist/index.js
 dist/res/
+node_modules/
