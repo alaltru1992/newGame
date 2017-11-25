@@ -1,14 +1,11 @@
-export default class Kozak {
+import Actor from "./actor";
 
-    constructor(kozak) {
-        // this.speed = 5;
-        // this.pos = {x: 1200, y: 560};
-        this.kozak = kozak;
+export default class Kozak extends Actor {
 
+    constructor({name}) {
+        super({name});
+        this.acc = {x: 0.5, y: -4};
+        setInterval(() => { this.move((Math.random() * 3 | 0)-1 )}, 5000);
     }
 
-    tick() {
-        this.kozak.pos.x -= 5;
-
-    }
 }

@@ -4,7 +4,7 @@ export default class Kozak {
         this.model = model;
         this.view = view;
         window.addEventListener("keydown", e=>this.keydown(e.keyCode));
-        window.addEventListener("keyup", e=>this.keyup(), e=>this.keyup());
+        window.addEventListener("keyup", e=>this.keyup(e.keyCode));
 
     }
 
@@ -12,8 +12,14 @@ export default class Kozak {
         this.model.move(keyCode - 38);
     }
 
-    keyup() {
-        this.model.move(0);
+    keyup(keyCode) {
+        console.log(keyCode);
+        if([1, -1].includes(keyCode - 38)) {
+            this.model.move(0);
+        }
+        else if ([-6].includes(keyCode - 38)) {
+            this.model.move(6);
+        }
     }
 
 }

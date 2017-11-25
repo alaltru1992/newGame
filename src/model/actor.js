@@ -1,65 +1,58 @@
+const gl = 440;
+
 export default class Actor {
 
-    constructor() {
-        this.speed = 5;
-        this.position = {x: 0, y: 560};
-        this.direction = 0;
-        this.jump = 10 ;
-        this.isRun = 0;
-
+    constructor({name}, map) {
+        this.name = name;
+        //this.speed = 5;
+        this.pos = {x: 0, y: gl};
+        this.direction = {x:0, y:0};
+        this.speed = {x: 0, y: 0};
+        this.acc = {x: 5, y: -4};
+        this.maxspeed = {x: 8, y: 8};
+        this.map = map;
     }
 
     tick() {
+        Math.abs(this.speed.x) < 0.5 && (this.speed.x = 0);
+        let airacc = -this.speed.x * 0.3;
+        this.speed.x = this.speed.x + this.direction.x * this.acc.x + airacc;
+        this.pos.x = this.pos.x + this.speed.x + this.acc.x / 2 * this.direction.x + airacc / 2;
 
-        if(this.direction === -1) {
-            this.position.x =- this.speed;
-            this.isRun = -1;
-
-
-
-
+        if((this.direction.y === -6)&&(this.speed.y ===0)){
+            this.speed.y = 33.3;
         }
-        else if(this.direction === +1) {
-            this.position.x = this.speed;
-            this.isRun = 1;
-
-
-
-
+        else if(this.pos.y === gl) {
+            this.speed.y = 0;
         }
-        if (this.direction === 0){
-            this.position.x = 0;
-             this.isRun = 0;
-
+        else {
+            this.speed.y = this.speed.y + this.acc.y ;
         }
+        this.pos.y = this.pos.y + this.speed.y+ this.acc.y/2;
+        this.pos.y = Math.max(this.pos.y,gl);
 
-        if (this.direction === -6){
-
-            this.position.y -= this.jump;
-
-
-              if(this.isRun === 0){
-                  this.position.x = 0;
-              }
-              if(this.isRun === 1){
-                  this.position.x = this.speed;
-              }
-              if(this.isRun === -1){
-                  this.position.x = -this.speed;
-              }
-
-        }
-
-       // this.dir = this.direction;
+        console.log(this.name + " " + JSON.stringify(this.pos));
 
     }
+
+
 
     /**
      *
      * @param direction -1/+1/0
      */
     move(direction) {
-        this.direction = direction;
+        if([0, -1, 1].includes(direction)) {
+            this.direction.x = -direction;
+        }
+        if([6, -6].includes(direction)) {
+            if (direction === -6) {
+                this.direction.y = direction;
+            }
+            else {
+                this.direction.y = 0;
+            }
+        }
     }
 
 }

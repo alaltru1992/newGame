@@ -60,15 +60,95 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(1);
+"use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var gl = 440;
+
+var Actor = function () {
+    function Actor(_ref, map) {
+        var name = _ref.name;
+
+        _classCallCheck(this, Actor);
+
+        this.name = name;
+        //this.speed = 5;
+        this.pos = { x: 0, y: gl };
+        this.direction = { x: 0, y: 0 };
+        this.speed = { x: 0, y: 0 };
+        this.acc = { x: 5, y: -4 };
+        this.maxspeed = { x: 8, y: 8 };
+        this.map = map;
+    }
+
+    _createClass(Actor, [{
+        key: "tick",
+        value: function tick() {
+            Math.abs(this.speed.x) < 0.5 && (this.speed.x = 0);
+            var airacc = -this.speed.x * 0.3;
+            this.speed.x = this.speed.x + this.direction.x * this.acc.x + airacc;
+            this.pos.x = this.pos.x + this.speed.x + this.acc.x / 2 * this.direction.x + airacc / 2;
+
+            if (this.direction.y === -6 && this.speed.y === 0) {
+                this.speed.y = 33.3;
+            } else if (this.pos.y === gl) {
+                this.speed.y = 0;
+            } else {
+                this.speed.y = this.speed.y + this.acc.y;
+            }
+            this.pos.y = this.pos.y + this.speed.y + this.acc.y / 2;
+            this.pos.y = Math.max(this.pos.y, gl);
+
+            console.log(this.name + " " + JSON.stringify(this.pos));
+        }
+
+        /**
+         *
+         * @param direction -1/+1/0
+         */
+
+    }, {
+        key: "move",
+        value: function move(direction) {
+            if ([0, -1, 1].includes(direction)) {
+                this.direction.x = -direction;
+            }
+            if ([6, -6].includes(direction)) {
+                if (direction === -6) {
+                    this.direction.y = direction;
+                } else {
+                    this.direction.y = 0;
+                }
+            }
+        }
+    }]);
+
+    return Actor;
+}();
+
+exports.default = Actor;
+
+var Point = function Point() {
+    _classCallCheck(this, Point);
+
+    this.x = 0;
+    this.y = 0;
+};
 
 /***/ }),
 /* 1 */
@@ -77,11 +157,81 @@ module.exports = __webpack_require__(1);
 "use strict";
 
 
-var _actor = __webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Actor = function () {
+    function Actor(actor, game, _ref) {
+        var runs = _ref.runs,
+            _ref$jump = _ref.jump,
+            up = _ref$jump.up,
+            fall = _ref$jump.fall,
+            stand = _ref.stand,
+            name = _ref.name;
+
+        _classCallCheck(this, Actor);
+
+        this.name = name;
+        this.actor = actor;
+        this.game = game;
+        this.gr = new PIXI.Sprite(PIXI.Texture.fromImage(stand));
+        this.gr.scale = { x: -0.15, y: 0.15 };
+        this.gr.anchor = { x: 0.5, y: 0 };
+        this.direction = 0;
+        this.textures = { runs: runs, jump: { up: up, fall: fall }, stand: stand };
+    }
+
+    _createClass(Actor, [{
+        key: "render",
+        value: function render() {
+            this.gr.x = window.innerWidth / 2 + this.actor.pos.x - this.game.pos.x;
+            this.gr.y = window.innerHeight - this.actor.pos.y;
+            if (this.actor.speed.x > 0) {
+                this.gr.scale = { x: -0.15, y: 0.15 };
+            } else {
+                this.gr.scale = { x: 0.15, y: 0.15 };
+            }
+            if (this.actor.speed.y > 0) {
+                this.gr.texture = PIXI.Texture.fromImage(this.textures.jump.up);
+            } else if (this.actor.speed.y < 0) {
+                this.gr.texture = PIXI.Texture.fromImage(this.textures.jump.fall);
+            } else if (this.actor.speed.x !== 0) {
+                this.gr.texture = PIXI.Texture.fromImage(this.textures.runs[Date.now() % 600 / 100 | 0]);
+            } else {
+                this.gr.texture = PIXI.Texture.fromImage(this.textures.stand);
+            }
+        }
+    }]);
+
+    return Actor;
+}();
+
+exports.default = Actor;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(3);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _actor = __webpack_require__(0);
 
 var _actor2 = _interopRequireDefault(_actor);
 
-var _actor3 = __webpack_require__(3);
+var _actor3 = __webpack_require__(1);
 
 var _actor4 = _interopRequireDefault(_actor3);
 
@@ -127,32 +277,52 @@ var _shot4 = _interopRequireDefault(_shot3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var actorM = new _actor2.default();
+var actorM = new _actor2.default({ name: "naval'niy" });
 var gameM = new _game4.default(actorM);
 
 var gameV = new _game2.default(gameM);
-var actorV = new _actor4.default(actorM, gameM);
+var actorV = new _actor4.default(actorM, gameM, {
+    name: "naval'niy",
+    runs: new Array(6).fill(0).map(function (_, index) {
+        return "res/frame-" + (index + 1) + ".png";
+    }),
+    jump: { up: "res/jump_up.png", fall: "res/jump_fall.png" },
+    stand: "res/stand.png"
+});
+
+var nv = PIXI.Sprite.fromImage("res/navalniy.png");
+nv.anchor = { x: 0.5, y: 0 };
+nv.y = -30;
+actorV.gr.addChild(nv);
 
 var actorC = new _actor6.default(actorM, actorV);
 
 var stoneV = new _stone2.default();
 var stoneM = new _stone4.default(stoneV);
 
-var kozakV = new _kozak2.default();
-var kozakM = new _kozak4.default(kozakV);
+var kozakM = new _kozak4.default({ name: "kazak" });
 
-var actorH = new _actorHit2.default(actorV, kozakV);
+var kozakV = new _kozak2.default(kozakM, gameM, {
+    name: "kazak",
+    runs: new Array(6).fill(0).map(function (_, index) {
+        return "res/kozak.jpg";
+    }),
+    jump: { up: "res/kozak.jpg", fall: "res/kozak.jpg" },
+    stand: "res/kozak.jpg"
+});
+
+//let actorH = new ActorCont(actorV,kozakV);
 
 var shotV = new _shot2.default(actorV);
 var shotM = new _shot4.default(shotV);
 
 var app = new PIXI.Application(window.innerWidth, window.innerHeight, { backgroundColor: 0x1099bb });
-[gameV, actorV, stoneV, kozakV].forEach(function (elm) {
+[gameV, actorV, kozakV].forEach(function (elm) {
     return app.stage.addChild(elm.gr);
 });
 
 app.ticker.add(function (delta) {
-    [actorM, gameM, stoneM, kozakM].forEach(function (elm) {
+    [actorM, gameM, kozakM].forEach(function (elm) {
         return elm.tick();
     });
 });
@@ -163,7 +333,7 @@ app.ticker.add(function (delta) {
 
 (function frame() {
     requestAnimationFrame(frame);
-    [actorV, gameV, stoneV, kozakV].forEach(function (elm) {
+    [actorV, gameV, kozakV].forEach(function (elm) {
         return elm.render();
     });
 })();
@@ -180,129 +350,6 @@ window.addEventListener("load", function () {
          });*/
     }
 });
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Actor = function () {
-    function Actor() {
-        _classCallCheck(this, Actor);
-
-        this.speed = 5;
-        this.position = { x: 0, y: 560 };
-        this.direction = 0;
-        this.jump = 10;
-        this.isRun = 0;
-    }
-
-    _createClass(Actor, [{
-        key: "tick",
-        value: function tick() {
-
-            if (this.direction === -1) {
-                this.position.x = -this.speed;
-                this.isRun = -1;
-            } else if (this.direction === +1) {
-                this.position.x = this.speed;
-                this.isRun = 1;
-            }
-            if (this.direction === 0) {
-                this.position.x = 0;
-                this.isRun = 0;
-            }
-
-            if (this.direction === -6) {
-
-                this.position.y -= this.jump;
-
-                if (this.isRun === 0) {
-                    this.position.x = 0;
-                }
-                if (this.isRun === 1) {
-                    this.position.x = this.speed;
-                }
-                if (this.isRun === -1) {
-                    this.position.x = -this.speed;
-                }
-            }
-
-            // this.dir = this.direction;
-        }
-
-        /**
-         *
-         * @param direction -1/+1/0
-         */
-
-    }, {
-        key: "move",
-        value: function move(direction) {
-            this.direction = direction;
-        }
-    }]);
-
-    return Actor;
-}();
-
-exports.default = Actor;
-
-var Point = function Point() {
-    _classCallCheck(this, Point);
-
-    this.x = 0;
-    this.y = 0;
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Actor = function () {
-    function Actor(actor, game) {
-        _classCallCheck(this, Actor);
-
-        this.actor = actor;
-        this.game = game;
-        this.gr = PIXI.Sprite.fromImage("res/stand.png");
-        this.gr.scale.set(0.15);
-        this.direction = 0;
-    }
-
-    _createClass(Actor, [{
-        key: "render",
-        value: function render() {
-            this.gr.x = this.actor.position.x - this.game.position.x;
-            this.gr.y = this.actor.position.y;
-        }
-    }]);
-
-    return Actor;
-}();
-
-exports.default = Actor;
 
 /***/ }),
 /* 4 */
@@ -331,9 +378,7 @@ var Kozak = function () {
             return _this.keydown(e.keyCode);
         });
         window.addEventListener("keyup", function (e) {
-            return _this.keyup();
-        }, function (e) {
-            return _this.keyup();
+            return _this.keyup(e.keyCode);
         });
     }
 
@@ -344,8 +389,13 @@ var Kozak = function () {
         }
     }, {
         key: "keyup",
-        value: function keyup() {
-            this.model.move(0);
+        value: function keyup(keyCode) {
+            console.log(keyCode);
+            if ([1, -1].includes(keyCode - 38)) {
+                this.model.move(0);
+            } else if ([-6].includes(keyCode - 38)) {
+                this.model.move(6);
+            }
         }
     }]);
 
@@ -374,14 +424,14 @@ var Game = function () {
         _classCallCheck(this, Game);
 
         this.game = game;
-        this.gr = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage("res/background.jpg"), window.innerWidth, window.innerHeight);
+        this.gr = new PIXI.extras.TilingSprite(PIXI.Texture.fromImage("res/bg.png"), window.innerWidth, window.innerHeight);
     }
 
     _createClass(Game, [{
         key: "render",
         value: function render() {
-            // this.gr.tilePosition.x = this.game.position.x ;
-            this.gr.tilePosition.x -= 5;
+
+            this.gr.tilePosition.x = this.game.pos.x % 2600;
         }
     }]);
 
@@ -411,18 +461,15 @@ var Game = function () {
     function Game(actor) {
         _classCallCheck(this, Game);
 
-        this.speed = 1;
-        this.position = { x: 0, y: 0 };
+        this.speed = { x: 1, y: 1 };
+        this.pos = { x: 0, y: 0 };
         this.actor = actor;
     }
 
     _createClass(Game, [{
         key: "tick",
         value: function tick() {
-            var dir = this.position.x - this.actor.position.x;
-            if (dir) {
-                this.position.x = dir * this.speed;
-            }
+            this.pos = { x: this.actor.pos.x, y: this.actor.pos.y };
         }
     }]);
 
@@ -516,35 +563,32 @@ exports.default = Stone;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _actor = __webpack_require__(1);
+
+var _actor2 = _interopRequireDefault(_actor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Kozak = function () {
-    function Kozak() {
-        _classCallCheck(this, Kozak);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-        this.gr = PIXI.Sprite.fromImage("res/cosak.jpg");
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-        this.gr.scale.set(0.25);
-        // this.speed = 5;
-        this.pos = { x: 1000, y: 560 };
-    }
+var Kozak = function (_Actor) {
+  _inherits(Kozak, _Actor);
 
-    _createClass(Kozak, [{
-        key: "render",
-        value: function render() {
-            //this.gr.x += this.speed ;
-            this.gr.x = this.pos.x;
-            this.gr.y = this.pos.y;
-        }
-    }]);
+  function Kozak() {
+    _classCallCheck(this, Kozak);
 
-    return Kozak;
-}();
+    return _possibleConstructorReturn(this, (Kozak.__proto__ || Object.getPrototypeOf(Kozak)).apply(this, arguments));
+  }
+
+  return Kozak;
+}(_actor2.default);
 
 exports.default = Kozak;
 
@@ -559,28 +603,37 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _actor = __webpack_require__(0);
+
+var _actor2 = _interopRequireDefault(_actor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Kozak = function () {
-    function Kozak(kozak) {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Kozak = function (_Actor) {
+    _inherits(Kozak, _Actor);
+
+    function Kozak(_ref) {
+        var name = _ref.name;
+
         _classCallCheck(this, Kozak);
 
-        // this.speed = 5;
-        // this.pos = {x: 1200, y: 560};
-        this.kozak = kozak;
+        var _this = _possibleConstructorReturn(this, (Kozak.__proto__ || Object.getPrototypeOf(Kozak)).call(this, { name: name }));
+
+        _this.acc = { x: 0.5, y: -4 };
+        setInterval(function () {
+            _this.move((Math.random() * 3 | 0) - 1);
+        }, 5000);
+        return _this;
     }
 
-    _createClass(Kozak, [{
-        key: "tick",
-        value: function tick() {
-            this.kozak.pos.x -= 5;
-        }
-    }]);
-
     return Kozak;
-}();
+}(_actor2.default);
 
 exports.default = Kozak;
 
@@ -643,7 +696,7 @@ var Stone = function () {
 
         this.actor = actor;
         this.gr = PIXI.Sprite.fromImage("res/shot.png");
-        this.pos = { x: this.actor.gr.position.x, y: 500 };
+        this.pos = { x: this.actor.gr.position.x, y: this.actor.gr.position.y };
         // this.gr.scale.set(0.15);
         // this.speed = 5;
         //this.pos = {x: 1000, y:400};

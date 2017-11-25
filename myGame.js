@@ -28,10 +28,10 @@ window.onload = function(){
 
 
     function rightMove(obj){
-        app.stage.addChild(obj)
+        app.stage.addChild(obj);
         app.ticker.add( function(left){
             obj.x -= 2*left;
-        })
+        });
         return obj;
     }
 
