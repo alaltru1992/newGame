@@ -31,8 +31,13 @@ export default class Actor {
         this.pos.y = this.pos.y + this.speed.y+ this.acc.y/2;
         this.pos.y = Math.max(this.pos.y,gl);
 
-        console.log(this.name + " " + JSON.stringify(this.pos));
+        console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
 
+    }
+
+    turnover(){
+        this.speed.x = 0;
+        this.direction.x = 0;
     }
 
 
@@ -43,7 +48,7 @@ export default class Actor {
      */
     move(direction) {
         if([0, -1, 1].includes(direction)) {
-            this.direction.x = -direction;
+            this.direction.x = direction;
         }
         if([6, -6].includes(direction)) {
             if (direction === -6) {

@@ -7,12 +7,13 @@ import StoneView from "./view/stone"
 import StoneModel from "./model/stone"
 import KozakView from "./view/kozak"
 import KozakModel from "./model/kozak"
-import ActorCont from "./controller/actorHit"
+import ActorCont from "./model/actorHit"
 import ShotView from "./view/shot"
 import ShotModel from "./model/shot"
 
 let actorM = new ActorModel({name: "naval'niy"});
 let gameM = new GameModel(actorM);
+
 
 let gameV = new GameView(gameM);
 let actorV = new ActorView(actorM, gameM, {
@@ -21,13 +22,13 @@ let actorV = new ActorView(actorM, gameM, {
     jump: {up: "res/jump_up.png", fall: "res/jump_fall.png"},
     stand: "res/stand.png"
 });
-
-const nv = PIXI.Sprite.fromImage("res/navalniy.png");
+/*
+const nv = PIXI.Sprite.fromImage("res/slut.png");
 nv.anchor = {x: 0.5, y: 0};
 nv.y = -30;
 actorV.gr.addChild(nv);
 
-
+*/
 
 
 let actorC = new ActorController(actorM, actorV);
@@ -43,18 +44,20 @@ let kozakV = new KozakView(kozakM, gameM, {
     jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
     stand: "res/kozak.jpg"
 });
-
+let map = [actorM,kozakM];
+let main = new ActorCont({name:"main"},map);
 //let actorH = new ActorCont(actorV,kozakV);
 
 let shotV = new ShotView(actorV);
 let shotM = new ShotModel(shotV);
 
 
+
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 [gameV, actorV, kozakV].forEach(elm => app.stage.addChild(elm.gr));
 
 app.ticker.add(function(delta) {
-    [actorM, gameM, kozakM].forEach(elm => elm.tick());
+    [actorM, gameM, kozakM, main].forEach(elm => elm.tick());
 });
 
 /*app.ticker.add(function(delta) {

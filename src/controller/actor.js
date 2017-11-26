@@ -13,7 +13,6 @@ export default class Kozak {
     }
 
     keyup(keyCode) {
-        console.log(keyCode);
         if([1, -1].includes(keyCode - 38)) {
             this.model.move(0);
         }
