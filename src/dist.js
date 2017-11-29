@@ -33,20 +33,39 @@ actorV.gr.addChild(nv);
 
 let actorC = new ActorController(actorM, actorV);
 
-let stoneV = new StoneView();
-let stoneM = new StoneModel(stoneV);
 
-let kozakM = new KozakModel({name: "kazak"});
+let distance = 1000;
+let kozakMArr = new Array(200);
+let kozakVArr = new Array(200)
+for (let i = 0; i<199; i++){
+    kozakMArr[i] = new KozakModel({name: "newkazak"},distance);
+    kozakVArr[i] = new KozakView(kozakMArr[i], gameM, {
+        name: "newkazak",
+        runs: new Array(6).fill(0).map( (_, index) => "res/kozak.jpg" ),
+        jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
+        stand: "res/kozak.jpg"
+    });
+    distance+= Math.floor(Math.random()*800)+250;
+}
+let stoneMArr = new Array(50);
+let stoneVArr = new Array(50);
+let position = 2000+ Math.floor(Math.random()*500);
+for (let j = 0; j<49; j++){
+    stoneMArr[j] = new StoneModel({name: "stone"},position);
+    stoneVArr[j] = new StoneView(stoneMArr[j], gameM, {
+        name: "stone",
+        runs: new Array(6).fill(0).map( (_, index) => "res/stone.jpg" ),
+        jump: {up: "res/stone.jpg", fall: "res/stone.jpg"},
+        stand: "res/stone.jpg"
+    });
+    position+= 500+ Math.floor(Math.random()*1000);
+}
 
-let kozakV = new KozakView(kozakM, gameM, {
-    name: "kazak",
-    runs: new Array(6).fill(0).map( (_, index) => "res/kozak.jpg" ),
-    jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
-    stand: "res/kozak.jpg"
-});
-let map = [actorM,kozakM];
+
+
+let map = [...kozakMArr,actorM];
 let main = new ActorCont({name:"main"},map);
-//let actorH = new ActorCont(actorV,kozakV);
+
 
 let shotV = new ShotView(actorV);
 let shotM = new ShotModel(shotV);
@@ -54,19 +73,17 @@ let shotM = new ShotModel(shotV);
 
 
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
-[gameV, actorV, kozakV].forEach(elm => app.stage.addChild(elm.gr));
+[gameV, actorV,...kozakVArr,...stoneVArr].forEach(elm => app.stage.addChild(elm.gr));
 
 app.ticker.add(function(delta) {
-    [actorM, gameM, kozakM, main].forEach(elm => elm.tick());
+    [actorM, gameM, main,...kozakMArr,...stoneMArr].forEach(elm => elm.tick());
 });
 
-/*app.ticker.add(function(delta) {
-    [actorC].forEach(elm => elm.tick(actorV, kozakV));
-});*/
+
 
 (function frame() {
     requestAnimationFrame( frame );
-    [actorV, gameV, kozakV].forEach(elm => elm.render());
+    [actorV, gameV,...kozakVArr,...stoneVArr].forEach(elm => elm.render());
 })();
 
 window.addEventListener("load", () => {

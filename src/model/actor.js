@@ -1,4 +1,4 @@
-const gl = 440;
+const gl = 200;
 
 export default class Actor {
 
@@ -8,9 +8,12 @@ export default class Actor {
         this.pos = {x: 0, y: gl};
         this.direction = {x:0, y:0};
         this.speed = {x: 0, y: 0};
-        this.acc = {x: 5, y: -4};
+        this.acc = {x: 3.5, y: -4};
         this.maxspeed = {x: 8, y: 8};
         this.map = map;
+
+
+
     }
 
     tick() {
@@ -20,7 +23,7 @@ export default class Actor {
         this.pos.x = this.pos.x + this.speed.x + this.acc.x / 2 * this.direction.x + airacc / 2;
 
         if((this.direction.y === -6)&&(this.speed.y ===0)){
-            this.speed.y = 33.3;
+            this.speed.y = 40.1;
         }
         else if(this.pos.y === gl) {
             this.speed.y = 0;
@@ -31,13 +34,14 @@ export default class Actor {
         this.pos.y = this.pos.y + this.speed.y+ this.acc.y/2;
         this.pos.y = Math.max(this.pos.y,gl);
 
-        console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
-
+       // console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
+          console.log(this.name, this.width);
     }
 
     turnover(){
         this.speed.x = 0;
         this.direction.x = 0;
+       // this.pos.x = 0;
     }
 
 

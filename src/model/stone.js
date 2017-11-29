@@ -1,14 +1,14 @@
-export default class Stone {
+import Actor from "./actor";
 
-    constructor(stone) {
-       // this.speed = 5;
-       // this.position = {x: 1200, y: 300};
-        this.stone = stone;
+export default class Kozak extends Actor {
+
+    constructor({name}, position) {
+        super({name});
+        this.pos.x = position;
+        this.speed.x = 0
+        this.acc = {x: 0, y: 0};
+        this.pos.y = 300;
 
     }
 
-    tick() {
-        this.stone.pos.x -= 5;
-
-    }
 }
