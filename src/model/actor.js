@@ -11,6 +11,8 @@ export default class Actor {
         this.acc = {x: 3.5, y: -4};
         this.maxspeed = {x: 8, y: 8};
         this.map = map;
+        this.size = {x: 1, y: 1};
+        this.hit = false;
 
 
 
@@ -25,7 +27,7 @@ export default class Actor {
         if((this.direction.y === -6)&&(this.speed.y ===0)){
             this.speed.y = 40.1;
         }
-        else if(this.pos.y === gl) {
+        else if((this.pos.y === gl)||(this.pos.y === 350)) {
             this.speed.y = 0;
         }
         else {
@@ -35,13 +37,20 @@ export default class Actor {
         this.pos.y = Math.max(this.pos.y,gl);
 
        // console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
-          console.log(this.name, this.width);
+       //   console.log(this.name, this.width);
     }
 
     turnover(){
         this.speed.x = 0;
         this.direction.x = 0;
-       // this.pos.x = 0;
+        //this.pos.x = 0;
+        this.hit = true;
+
+    }
+    onStoneJump(){
+       this.pos.y = Math.max(this.pos.y, 350);
+      // this.direction.y = 0;
+      // this.speed.y = Math.max(0,this.speed.y);
     }
 
 
