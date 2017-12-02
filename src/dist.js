@@ -15,17 +15,17 @@ import ShotModel from "./model/shot"
 let map = [];
 let mapV = [];
 
-let actorM = new ActorModel({name: "naval'niy"});
-let gameM = new GameModel(actorM);
+let actorM = new ActorModel({name: "naval'niy"},map);
+let gameM = new GameModel(actorM,map);
 
 
-let gameV = new GameView(gameM);
+let gameV = new GameView(gameM,mapV);
 let actorV = new ActorView(actorM, gameM, {
     name: "naval'niy",
     runs: new Array(6).fill(0).map( (_, index) => "res/frame-" + (index+1) + ".png" ),
     jump: {up: "res/jump_up.png", fall: "res/jump_fall.png"},
     stand: "res/stand.png"
-});
+},mapV);
 
 
 
@@ -42,7 +42,7 @@ for (let i = 0; i < 200; i++){
         runs: new Array(6).fill(0).map( (_, index) => "res/kozak.jpg" ),
         jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
         stand: "res/kozak.jpg"
-    }));
+    },mapV));
     distance += Math.floor(Math.random()*800)+250;
 }
 let stoneMArr = [];
@@ -55,15 +55,15 @@ for (let j =0 ; j < 50; j++){
         runs: new Array(6).fill(0).map( (_, index) => "res/stone.jpg" ),
         jump: {up: "res/stone.jpg", fall: "res/stone.jpg"},
         stand: "res/stone.jpg"
-    }));
+    },mapV));
     position+= 500+ Math.floor(Math.random()*1000);
 }
 
 
 
 
-map.push(actorM,gameM,...kozakMArr,...stoneMArr);
-mapV.push(gameV, actorV,...kozakVArr,...stoneVArr);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr);
+mapV.push(gameV,actorV,...kozakVArr,...stoneVArr);
 
 let main = new ActorCont({name: "main"}, map);
 

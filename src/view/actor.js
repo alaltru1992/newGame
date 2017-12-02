@@ -1,6 +1,6 @@
 export default class Actor {
 
-    constructor(actor, game, {runs, jump: {up, fall},stand, name}) {
+    constructor(actor, game, {runs, jump: {up, fall},stand, name},mapV) {
         this.name = name;
         this.actor = actor;
         this.game = game;
@@ -9,6 +9,7 @@ export default class Actor {
         this.gr.anchor = {x: 0.5, y: 0};
         this.direction = 0;
         this.textures = {runs, jump: {up, fall}, stand};
+        this.mapV = mapV;
 
 
     }
@@ -33,6 +34,13 @@ export default class Actor {
         }
         else {
             this.gr.texture = PIXI.Texture.fromImage(this.textures.stand);
+        }
+
+        for(let i = 2; i< this.mapV.length; i++){
+           if(this.actor.map[i].hit === true){
+               let start = Date.now();
+               this.mapV[i].gr.texture = PIXI.Texture.fromImage("res/bang.png");
+           }
         }
     }
 
