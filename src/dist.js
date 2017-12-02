@@ -10,9 +10,10 @@ import KozakModel from "./model/kozak"
 import ActorCont from "./model/actorHit"
 import ShotView from "./view/shot"
 import ShotModel from "./model/shot"
-import OnStone from "./model/onStone"
+
 
 let map = [];
+let mapV = [];
 
 let actorM = new ActorModel({name: "naval'niy"});
 let gameM = new GameModel(actorM);
@@ -60,8 +61,10 @@ for (let j =0 ; j < 50; j++){
 
 
 
-map.push(actorM,...kozakMArr,...stoneMArr);
-let onstone = new OnStone({name: "onstone"}, map);
+
+map.push(actorM,gameM,...kozakMArr,...stoneMArr);
+mapV.push(gameV, actorV,...kozakVArr,...stoneVArr);
+
 let main = new ActorCont({name: "main"}, map);
 
 //console.log(map[0]);
@@ -72,14 +75,14 @@ let shotM = new ShotModel(shotV);
 
 
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
-[gameV, actorV,...kozakVArr,...stoneVArr].forEach(elm => {
+/*[gameV, actorV,...kozakVArr,...stoneVArr]*/mapV.forEach(elm => {
     app.stage.addChild(elm.gr);
 });
 
 
 
 app.ticker.add(function(delta) {
-    [actorM, gameM,...kozakMArr,main,...stoneMArr,onstone].forEach(elm => elm.tick());
+    [...map,main].forEach(elm => elm.tick());
     });
 
 
@@ -87,7 +90,7 @@ app.ticker.add(function(delta) {
 
 (function frame() {
     requestAnimationFrame( frame );
-    [actorV, gameV,...kozakVArr,...stoneVArr].forEach(elm => elm.render());
+   /* [actorV, gameV,...kozakVArr,...stoneVArr]*/mapV.forEach(elm => elm.render());
 })();
 
 

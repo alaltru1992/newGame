@@ -1,6 +1,6 @@
 export default class Actor {
 
-    constructor(actor, game, {runs, jump: {up, fall}, stand, name}) {
+    constructor(actor, game, {runs, jump: {up, fall},stand, name}) {
         this.name = name;
         this.actor = actor;
         this.game = game;
@@ -9,6 +9,8 @@ export default class Actor {
         this.gr.anchor = {x: 0.5, y: 0};
         this.direction = 0;
         this.textures = {runs, jump: {up, fall}, stand};
+
+
     }
 
     render() {
