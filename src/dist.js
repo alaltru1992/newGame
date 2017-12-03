@@ -10,13 +10,17 @@ import KozakModel from "./model/kozak"
 import ActorCont from "./model/actorHit"
 import ShotView from "./view/shot"
 import ShotModel from "./model/shot"
-
+import BarView from "./view/bar"
+import BarModel from "./model/bar"
 
 let map = [];
 let mapV = [];
 
 let actorM = new ActorModel({name: "naval'niy"},map);
 let gameM = new GameModel(actorM,map);
+let barM = new BarModel({name:"lifebar"},map);
+let barV = new BarView(barM,gameM, {name:"lifebar"},{colors:{delcolor :"0xFF3300", fillcolor: "0xFFFFFF"}});
+
 
 
 let gameV = new GameView(gameM,mapV);
@@ -62,8 +66,8 @@ for (let j =0 ; j < 50; j++){
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr);
-mapV.push(gameV,actorV,...kozakVArr,...stoneVArr);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr,barM);
+mapV.push(gameV,actorV,...kozakVArr,...stoneVArr,barV);
 
 let main = new ActorCont({name: "main"}, map);
 

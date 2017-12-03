@@ -40,6 +40,7 @@ export default class Actor {
            if(this.actor.map[i].hit === true){
                let start = Date.now();
                this.mapV[i].gr.texture = PIXI.Texture.fromImage("res/bang.png");
+              // setTimeout(() => { this.mapV[i].gr.scale.set(0.01)}, 1000);
            }
         }
     }

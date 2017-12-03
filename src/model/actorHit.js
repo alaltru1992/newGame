@@ -8,9 +8,9 @@ export default class Hit extends Actor {
             if (this.map[i].name === "newkazak") {
                 if ((Math.abs(this.map[1].pos.x - this.map[i].pos.x) < 50) && (Math.abs(this.map[1].pos.y - this.map[i].pos.y) < 50)) {
                     this.map[1].turnover();
+                    this.map[1].life--;
+                    this.map[1].life = Math.max(this.map[1].life,0);
                     this.map[i].name = "neutral";
-                    //this.map[i].turnover();
-                    // this.map.slice(i,1);
                     this.map[i].hit = true;
 
                 }
@@ -21,7 +21,7 @@ export default class Hit extends Actor {
                 }
             }
         }
-
+        console.log(this.map[1].life);
 
     }
 }

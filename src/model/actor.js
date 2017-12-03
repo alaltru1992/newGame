@@ -13,6 +13,7 @@ export default class Actor {
         this.map = map;
         this.size = {x: 1, y: 1};
         this.hit = false;
+        this.life = 3;
 
 
 
