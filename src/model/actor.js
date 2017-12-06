@@ -2,8 +2,9 @@ const gl = 200;
 
 export default class Actor {
 
-    constructor({name}, map) {
+    constructor({name}, map,shotM) {
         this.name = name;
+        this.shotM = shotM;
         //this.speed = 5;
         this.pos = {x: 0, y: gl};
         this.direction = {x:0, y:0};
@@ -12,8 +13,10 @@ export default class Actor {
         this.maxspeed = {x: 8, y: 8};
         this.map = map;
         this.size = {x: 1, y: 1};
-        this.hit = false;
+        this.hit = 0;
         this.life = 3;
+        this.load = 0;
+
 
 
 
@@ -53,6 +56,9 @@ export default class Actor {
       // this.direction.y = 0;
       // this.speed.y = Math.max(0,this.speed.y);
     }
+    actorShoot(){
+        this.map.push(this.shotM);
+    }
 
 
 
@@ -65,23 +71,17 @@ export default class Actor {
             this.direction.x = direction;
         }
         if([6, -6].includes(direction)) {
-            if (direction === -6) {
                 this.direction.y = direction;
             }
             else {
                 this.direction.y = 0;
             }
+        if(direction === 20){
+            this.isShot = true;
         }
-    }
+        }
+
 
 }
 
 
-class Point {
-
-    constructor() {
-        this.x = 0;
-        this.y = 0;
-    }
-
-}

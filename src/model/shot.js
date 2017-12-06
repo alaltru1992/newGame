@@ -1,14 +1,19 @@
-export default class Stone {
+import Actor from "./actor";
 
-    constructor(shot) {
-        // this.speed = 5;
-        // this.position = {x: 1200, y: 300};
-        this.shot = shot;
+export default class Shot extends Actor {
+
+    constructor({name}, map) {
+        super({name}, map);
+       // this.pos.x =  ;
+        this.speed.x = 20;
+        this.acc = {x: 0, y: -4};
+         this.move(1);
+         this.name = {name};
+        // this.hit = false;
+    }
+    tick(){
+        this.pos.x +=this.speed.x - this.map[1].speed.x;
 
     }
 
-    tick() {
-        this.shot.pos.x -= 5;
-
-    }
 }

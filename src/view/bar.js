@@ -1,13 +1,10 @@
 export default  class Bar {
-    constructor(barM,gameM,{name}, {colors:{defcolor, fillcolor}}){
+    constructor(barM,gameM,{name}){
         this.barM = barM;
-       // this.mapV = mapV;
         this.name = name;
         this.game = gameM;
-        this.colors = {colors:{defcolor, fillcolor}};
-       // this.gr = new PIXI.Sprite(PIXI.Texture.fromImage("res/shot.png"));
+       // this.colors = {colors:{defcolor, fillcolor}};
         this.gr = new PIXI.Graphics();
-       // this.gr.drawRoundedRect(this.barM.pos.x - this.game.pos.x, 50, this.barM.pos.x - this.game.pos.x+100, 80);
     }
     render(){
 
