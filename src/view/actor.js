@@ -37,7 +37,7 @@ export default class Actor {
             this.gr.texture = PIXI.Texture.fromImage(this.textures.stand);
         }
 
-        for(let i = 2; i< this.mapV.length; i++){
+        for(let i = 2; i< this.actor.map.length; i++){
            if(this.actor.map[i].hit === 1){
                this.mapV[i].gr.texture = PIXI.Texture.fromImage("res/bang.png");
                 //setTimeout(() => { this.mapV[i].gr.scale *=0.1}, 300);

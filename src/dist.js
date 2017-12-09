@@ -22,19 +22,21 @@ import DonateModel from "./model/donate"
 
 let map = [];
 let mapV = [];
-let shotM = new ShotModel({name:"shot"},map, actorM);
-let shotV = new ShotView(shotM,gameM,{
+
+let shotM = new ShotModel({name:"shot"},map);
+let shotV = new ShotView(shotM,gameV,{
     name: "shot",
     runs: new Array(6).fill(0).map( (_, index) => "res/fireball.png" ),
     jump: {up: "res/fireball.png", fall: "res/fireball.png"},
     stand: "res/fireball.png"
 },mapV);
+
 let actorM = new ActorModel({name: "naval'niy"},map,shotM);
-let gameM = new GameModel(actorM,map,shotV);
+let gameM = new GameModel(actorM,map);
 let barM = new BarModel({name:"lifebar"},map);
-let barV = new BarView(barM,gameM, {name:"lifebar"});
-let barloadM = new BarLoadModel({name:"loadbar"},map);
-let barloadV = new BarLoadView(barloadM,gameM, {name:"loadbar"});
+let barV = new BarView(actorM, {name:"lifebar"});
+//let barloadM = new BarLoadModel({name:"loadbar"},map);
+//let barloadV = new BarLoadView(actorM, {name:"loadbar", settings: {}});
 
 
 
@@ -113,8 +115,8 @@ lbname.gr.y = 30;*/
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr,barM,...donateMArr,barloadM/*,...donateMArr*/);
-mapV.push(gameV,actorV,...kozakVArr,...stoneVArr,barV,...donateVArr,barloadV/*,...donateVArr*/);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*//*,...donateMArr*/);
+mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
 let main = new ActorCont({name: "main"}, map);
 

@@ -19,9 +19,9 @@ export default class Kozak {
         else if ([-6].includes(keyCode - 38)) {
             this.model.move(6);
         }
-        else if (([-20].includes(keyCode - 38))&&(this.model.map[1].load === 4)) {
-         //   this.model.actorShoot();
-         //   this.view.shoot();
+        else if (([40].includes(keyCode - 38)))/*&&(this.model.map[1].load === 4))*/ {
+            this.model.actorShoot();
+            this.view.shoot();
         }
     }
 

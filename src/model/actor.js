@@ -16,10 +16,6 @@ export default class Actor {
         this.hit = 0;
         this.life = 3;
         this.load = 0;
-
-
-
-
     }
 
     tick() {
