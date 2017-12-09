@@ -1,3 +1,5 @@
+import Fusilier from "./advantages/fusilier";
+
 const gl = 200;
 
 export default class Actor {
@@ -15,6 +17,7 @@ export default class Actor {
         this.size = {x: 1, y: 1};
         this.hit = 0;
         this.life = 3;
+        this.advantages = [];
         this.load = 0;
     }
 

@@ -16,7 +16,7 @@ import ShotView from "./view/shot"
 import ShotModel from "./model/shot"
 import DonateView from "./view/donate"
 import DonateModel from "./model/donate"
-
+import Factory from "./view/factory";
 
 
 
@@ -32,6 +32,7 @@ let shotV = new ShotView(shotM,gameV,{
 },mapV);
 
 let actorM = new ActorModel({name: "naval'niy"},map,shotM);
+
 let gameM = new GameModel(actorM,map);
 let barM = new BarModel({name:"lifebar"},map);
 let barV = new BarView(actorM, {name:"lifebar"});
@@ -130,23 +131,59 @@ let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroun
 
 
 
-app.ticker.add(function(delta) {
-    [...map,main].forEach(elm => elm.tick());
-    });
 
+
+const factoryV = new Factory(gameM);
+
+
+app.ticker.add(function(delta) {
+
+    [...map,main].forEach(elm => elm.tick());
+
+    for(let i = 0; i < map.length; i++) {
+
+        const adv = map[i].advantages;
+        for(let k = 0; k < ) {
+
+        }
+
+    }
+
+    map.forEach( model => {
+
+        //находится в зоне действия
+        if() {
+            //если виюха еще не создана
+            if() {
+                let view = factoryV.create(model);
+                if(view) {
+                    this.mapV.push(view);
+                }
+            }
+        }
+
+    } );
+
+    [...mapV].forEach( view => {
+
+        //находится в вне зоны действия
+        if() {
+            mapV.splice(mapV.indexOf(view), 1);
+        }
+
+    } );
+
+});
 
 
 
 (function frame() {
     requestAnimationFrame( frame );
-   /* [actorV, gameV,...kozakVArr,...stoneVArr]*/mapV.forEach(elm => elm.render());
+    /* [actorV, gameV,...kozakVArr,...stoneVArr]*/mapV.forEach(elm => elm.render());
 })();
+
 
 
 window.addEventListener("load", () => {
     document.body.appendChild(app.view);
-
-
-
-
 });
