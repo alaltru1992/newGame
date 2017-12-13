@@ -3,6 +3,7 @@ export  default  class Bar{
         this.name = "lifebar";
         this.pos = {x:50,y:50};
         this.map = map;
+        this.viewCreated = false;
     }
 
     tick(){

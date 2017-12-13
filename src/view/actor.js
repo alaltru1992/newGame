@@ -13,6 +13,7 @@ export default class Actor {
         this.textures = {runs, jump: {up, fall}, stand};
         this.mapV = mapV;
         this.shotV = shotV;
+
     }
 
     render() {

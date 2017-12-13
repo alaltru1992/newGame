@@ -13,6 +13,7 @@ export default class Bar {
         this.gr.drawRect(x , y, width, 35);
         this.gr.endFill();
 
+
     }
     render(){
         const {actor} = this;

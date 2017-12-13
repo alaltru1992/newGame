@@ -34,7 +34,7 @@ export default class Hit extends Actor {
         }
 
 
-        console.log(this.map[1].load);
+
 
     }
 }

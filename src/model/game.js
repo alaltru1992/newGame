@@ -7,6 +7,7 @@ export default class Game {
         this.speed = {x:1, y:1};
         this.pos = {x: 0, y: 0};
         this.actor = actor;
+        this.viewCreated = false;
     }
 
     tick() {

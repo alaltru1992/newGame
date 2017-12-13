@@ -19,6 +19,7 @@ export default class Actor {
         this.life = 3;
         this.advantages = [];
         this.load = 0;
+        this.viewCreated = false;
     }
 
     tick() {
@@ -41,6 +42,7 @@ export default class Actor {
 
        // console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
        //   console.log(this.name, this.width);
+        console.log(this.life);
     }
 
     turnover(){
