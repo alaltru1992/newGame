@@ -17,6 +17,8 @@ import ShotModel from "./model/shot"
 import DonateView from "./view/donate"
 import DonateModel from "./model/donate"
 import Factory from "./view/factory";
+import NavalniyModel from "./model/navalniy"
+import NavalniyView from "./view/navalniy";
 
 
 
@@ -24,7 +26,7 @@ let map = [];
 let mapV = [];
 
 let shotM = new ShotModel({name:"shot"},map);
-let actorM = new ActorModel({name: "naval'niy"},map,shotM);
+let actorM = new NavalniyModel({name: "naval'niy"},map,shotM);
 let gameM = new GameModel(actorM,map);
 
 
@@ -70,56 +72,43 @@ for (let j =0 ; j < 50; j++) {
 map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
-let main = new ActorCont({name: "main"}, map);
+//let main = new ActorCont({name: "main"}, map);
 
 
 //console.log(map[0]);
 
+let LBar = new BarView(actorM,{name:"lifebar",settings:{x:10,y:10,width:100}});
 
 
 const factoryV = new Factory(gameM,actorM);
+let ActorC = new ActorController(actorM,);
 
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
-/*[gameV, actorV,...kozakVArr,...stoneVArr]*/mapV.forEach(elm => {
+
+/*[gameV, actorV,...kozakVArr,...stoneVArr]mapV.forEach(elm => {
     app.stage.addChild(elm.gr);
-});
+});*/
 
 
 app.ticker.add(function(delta) {
 
-    [...map, main].forEach(elm => elm.tick());
+    [...map].forEach(elm => elm.tick());
 
     /* for(let i = 0; i < map.length; i++) {
 
-         const adv = map[i].advantages;
+         let adv = map[i].advantages;
          for(let k = 0; k < map.length; k++ ) {
 
          }*/
+   // map.forEach(model =>  addView(model,actorM,mapV,factoryV));
+    //находится в вне зоны действия
+    //mapV.forEach(view => removeView(view,actorM,mapV));
 });
 
     map.forEach(model =>  addView(model,gameM,mapV,factoryV));
-            //находится в зоне действия
-         /*   if ((gameM.pos.x - model.pos.x) < 2000) {
-                //если виюха еще не создана
-                if (model.viewCreated === false) {
-                    let view =  factoryV.createActor(model);
-                    if (view) {
-                        mapV.push(view);
-                        model.view = true;
-                    }
-                }
-            }
-        }
-    )*/
     //находится в вне зоны действия
         mapV.forEach(view => removeView(view,gameM,mapV));
-         /*   if ((gameM.pos.x - view.gr.x) > 2600) {
-                mapV.splice(mapV.indexOf(view), 1);
-                view.actor.view = false;
-            }
-        } )*/
-
-
+        app.stage.addChild(LBar.gr);
 
     (function frame() {
         requestAnimationFrame(frame);
@@ -132,8 +121,6 @@ app.ticker.add(function(delta) {
     });
 
 function addView(model, gameM, mapV, factoryV){
-
-
     if (Math.abs(gameM.pos.x - model.pos.x) < 2000) {
         //если виюха еще не создана
         if (model.viewCreated === false) {

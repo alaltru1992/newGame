@@ -26,15 +26,8 @@ export default class Hit extends Actor {
                     this.map[1].life = Math.min(this.map[1].life,4);
                     this.map[i].name = "neutral";
                     this.map[i].hit = 2;
-
                 }
-
             }
-
         }
-
-
-
-
     }
 }

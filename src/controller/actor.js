@@ -1,6 +1,6 @@
 import Fusilier from "../model/advantages/fusilier";
 
-export default class Kozak {
+export default class Controller {
 
     /**
      *
@@ -13,7 +13,6 @@ export default class Kozak {
          * @type {Actor}
          */
         this.model = model;
-        this.view = view;
         window.addEventListener("keydown", e=>this.keydown(e.keyCode));
         window.addEventListener("keyup", e=>this.keyup(e.keyCode));
 
@@ -34,10 +33,6 @@ export default class Kozak {
         }
         else if ([-6].includes(keyCode - 38)) {
             this.model.move(6);
-        }
-        else if (([40].includes(keyCode - 38)))/*&&(this.model.map[1].load === 4))*/ {
-            this.model.actorShoot();
-            this.view.shoot();
         }
     }
 

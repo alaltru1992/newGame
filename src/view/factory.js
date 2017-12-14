@@ -1,14 +1,16 @@
 import Hit from "../model/actorHit";
 import KozakV from "./kozak";
 import KozakM from "../model/kozak";
-import StoneV from "./kozak";
-import StoneM from "../model/kozak";
+import StoneV from "./stone";
+import StoneM from "../model/stone";
 import ActorV from "./actor";
 import ActorM from "../model/actor";
 import GameV from "./game";
 import GameM from "../model/game";
 import DonateV from "./donate";
 import DonateM from "../model/donate";
+import NavalniyV from "./navalniy";
+import NavalniyM from "../model/navalniy";
 
 
 
@@ -30,15 +32,15 @@ export default class Factory {
         else if(model instanceof KozakM) {
             return new KozakV(model, this.game,{runs: ["res/kozak.jpg","res/kozak.jpg","res/kozak.jpg","res/kozak.jpg",
                 "res/kozak.jpg","res/kozak.jpg" ], jump:{up:"res/kozak.jpg", fall :"res/kozak.jpg"},
-          stand:"res/kozak.jpg", name: "newkozak"});
+          stand:"res/kozak.jpg", name: "newkazak"});
         }
         else if(model instanceof StoneM) {
             return new StoneV(model, this.game,{runs: ["res/stone.jpg","res/stone.jpg","res/stone.jpg","res/stone.jpg",
                 "res/stone.jpg","res/stone.jpg" ], jump:{up:"res/stone.jpg", fall :"res/stone.jpg"},
                 stand:"res/stone.jpg", name: "stone"});
         }
-        else if(model instanceof ActorM) {
-            return new ActorV(model, this.game,{runs: ["res/frame-1.png","res/frame-2.png","res/frame-3.png","res/frame-4.png",
+        else if(model instanceof NavalniyM) {
+            return new NavalniyV(model, this.game,{runs: ["res/frame-1.png","res/frame-2.png","res/frame-3.png","res/frame-4.png",
                 "res/frame-5.png","res/frame-6.png" ],  jump:{up:"res/jump_up.png", fall :"res/jump_fall.png"},
                 stand:"res/stand.png", name: "naval'niy"});
         }
