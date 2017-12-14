@@ -16,7 +16,7 @@ export default class Physics extends Advantage {
      * @param {Actor} target
      */
     affect(target) {
-        let phis = target.advantages.find( adv instanceof Physics);
+        let phis = target.advantages.find( adv instanceof physics);
         if(phis) {
 
         }

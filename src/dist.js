@@ -67,7 +67,7 @@ for (let j =0 ; j < 50; j++) {
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*//*,...donateMArr*/);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
 let main = new ActorCont({name: "main"}, map);
@@ -95,7 +95,7 @@ app.ticker.add(function(delta) {
          for(let k = 0; k < map.length; k++ ) {
 
          }*/
-})
+});
 
     map.forEach(model =>  addView(model,gameM,mapV,factoryV));
             //находится в зоне действия
@@ -125,14 +125,13 @@ app.ticker.add(function(delta) {
         requestAnimationFrame(frame);
         /* [actorV, gameV,...kozakVArr,...stoneVArr]*/
         mapV.forEach(elm => elm.render());
-    });
-
+    })();
 
     window.addEventListener("load", () => {
         document.body.appendChild(app.view);
     });
 
-function addView(model,gameM,mapV,factoryV){
+function addView(model, gameM, mapV, factoryV){
     if ((gameM.pos.x - model.pos.x) < 2000) {
         //если виюха еще не создана
         if (model.viewCreated === false) {
