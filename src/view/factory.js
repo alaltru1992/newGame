@@ -28,19 +28,23 @@ export default class Factory {
             return null;
         }
         else if(model instanceof KozakM) {
-            return new KozakV(model, this.game,{runs: "res/kozak.jpg", jump:{up:"res/kozak.jpg", fall :"res/kozak.jpg"},
+            return new KozakV(model, this.game,{runs: ["res/kozak.jpg","res/kozak.jpg","res/kozak.jpg","res/kozak.jpg",
+                "res/kozak.jpg","res/kozak.jpg" ], jump:{up:"res/kozak.jpg", fall :"res/kozak.jpg"},
           stand:"res/kozak.jpg", name: "newkozak"});
         }
         else if(model instanceof StoneM) {
-            return new StoneV(model, this.game,{runs: "res/stone.jpg", jump:{up:"res/stone.jpg", fall :"res/stone.jpg"},
+            return new StoneV(model, this.game,{runs: ["res/stone.jpg","res/stone.jpg","res/stone.jpg","res/stone.jpg",
+                "res/stone.jpg","res/stone.jpg" ], jump:{up:"res/stone.jpg", fall :"res/stone.jpg"},
                 stand:"res/stone.jpg", name: "stone"});
         }
         else if(model instanceof ActorM) {
-            return new ActorV(model, this.game,{runs: "res/frame-1.png", jump:{up:"res/jump_up.png", fall :"res/jump_fall.png"},
+            return new ActorV(model, this.game,{runs: ["res/frame-1.png","res/frame-2.png","res/frame-3.png","res/frame-4.png",
+                "res/frame-5.png","res/frame-6.png" ],  jump:{up:"res/jump_up.png", fall :"res/jump_fall.png"},
                 stand:"res/stand.png", name: "naval'niy"});
         }
         else if(model instanceof DonateM) {
-            return new DonateV(model, this.game,{runs: "res/donate.png", jump:{up:"res/donate.png", fall :"res/donate.png"},
+            return new DonateV(model, this.game,{runs:["res/donate.png","res/donate.png","res/donate.png","res/donate.png",
+                "res/donate.png","res/donate.png" ] , jump:{up:"res/donate.png", fall :"res/donate.png"},
                 stand:"res/donate.png", name: "donate"});
         }
     }

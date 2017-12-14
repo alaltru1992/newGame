@@ -3,7 +3,6 @@
 export default class Actor {
 
     constructor(actor, game, {runs, jump: {up, fall},stand, name}) {
-        debugger;
         this.name = name;
         this.actor = actor;
         this.game = game;

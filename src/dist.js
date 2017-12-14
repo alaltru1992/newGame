@@ -132,21 +132,26 @@ app.ticker.add(function(delta) {
     });
 
 function addView(model, gameM, mapV, factoryV){
-    if ((gameM.pos.x - model.pos.x) < 2000) {
+
+
+    if (Math.abs(gameM.pos.x - model.pos.x) < 2000) {
         //если виюха еще не создана
         if (model.viewCreated === false) {
             let view =  factoryV.createActor(model);
             if (view) {
                 mapV.push(view);
-                model.view = true;
+                model.viewCreated = true;
+                app.stage.addChild(view.gr);
             }
         }
     }
+
 }
 
 function removeView(view,gameM,mapV){
-    if ((gameM.pos.x - view.gr.x) > 2600) {
+    if (Math.abs(gameM.pos.x - view.gr.x) > 2600) {
         mapV.splice(mapV.indexOf(view), 1);
-        view.actor.view = false;
+        view.actor.viewCreated = false;
+        app.stage.removeChild(view.gr);
     }
 }
