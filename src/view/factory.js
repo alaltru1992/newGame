@@ -36,11 +36,11 @@ export default class Factory {
                 stand:"res/stone.jpg", name: "stone"});
         }
         else if(model instanceof ActorM) {
-            return new ActorV(model, this.game,{runs: "res/frame-1.png", jump:{up:"res/jump_up.png", fall :"jump_fall.png"},
+            return new ActorV(model, this.game,{runs: "res/frame-1.png", jump:{up:"res/jump_up.png", fall :"res/jump_fall.png"},
                 stand:"res/stand.png", name: "naval'niy"});
         }
         else if(model instanceof DonateM) {
-            return new DonateV(model, this.game,{runs: "res/donate.png", jump:{up:"res/donate.png", fall :"donate.png"},
+            return new DonateV(model, this.game,{runs: "res/donate.png", jump:{up:"res/donate.png", fall :"res/donate.png"},
                 stand:"res/donate.png", name: "donate"});
         }
     }

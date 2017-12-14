@@ -2,7 +2,7 @@
 
 export default class Actor {
 
-    constructor(actor, game, {runs, jump: {up, fall},stand, name},mapV,shotV) {
+    constructor(actor, game, {runs, jump: {up, fall},stand, name}) {
         debugger;
         this.name = name;
         this.actor = actor;
@@ -12,9 +12,6 @@ export default class Actor {
         this.gr.anchor = {x: 0.5, y: 0};
         this.direction = 0;
         this.textures = {runs, jump: {up, fall}, stand};
-        this.mapV = mapV;
-        this.shotV = shotV;
-
     }
 
     render() {
@@ -38,22 +35,6 @@ export default class Actor {
         else {
             this.gr.texture = PIXI.Texture.fromImage(this.textures.stand);
         }
-
-        for(let i = 2; i< this.actor.map.length; i++){
-           if(this.actor.map[i].hit === 1){
-               this.mapV[i].gr.texture = PIXI.Texture.fromImage("res/bang.png");
-                //setTimeout(() => { this.mapV[i].gr.scale *=0.1}, 300);
-              // this.mapV[i].gr.scale *=0.9;
-           }
-
-           else if(this.actor.map[i].hit === 2){
-               this.mapV[i].gr.scale.set(0.01);
-           }
-        }
     }
-    shoot(){
-            this.mapV.push(this.shotV);
-        }
-
 
 }
