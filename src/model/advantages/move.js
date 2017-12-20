@@ -2,10 +2,13 @@ import Advantage from "./advantage";
 
 export default class Move extends Advantage {
 
-    constructor({actor, game, position}) {
-        super({actor, game});
-        this.speed = speed;
+    constructor({actor, map, position}) {
+        super({actor, map});
+       // this.speed = speed;
+        this.speed = {x: 0, y: 0};
+        this.acc = {x: 3.5, y: -4};
         this.pos = position;
+        this.direction = {x:0, y:0};
     }
 
     action() {
@@ -16,7 +19,7 @@ export default class Move extends Advantage {
      * @param {Actor} target
      */
     affect(target) {
-        if(target === this.game) {
+        if(target === this.map) {
 
             Math.abs(this.speed.x) < 0.5 && (this.speed.x = 0);
             let airacc = -this.speed.x * 0.3;
@@ -34,7 +37,6 @@ export default class Move extends Advantage {
             }
             let y = this.pos.y + this.speed.y+ this.acc.y/2;
             y = Math.max(y, gl);
-
             this.pos.moveTo(x, y);
 
         }

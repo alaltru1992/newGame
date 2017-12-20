@@ -3,8 +3,8 @@ export default class Bar {
     constructor(actor,{name, settings: {
         x = 10, y = 10, width = 100
     } = {}}){
-        this.x = 10;
-        this.y = 10;
+        this.x = 15;
+        this.y = 15;
         this.width = 100;
         this.actor = actor;
         this.name = name;

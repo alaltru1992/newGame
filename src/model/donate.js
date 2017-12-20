@@ -6,7 +6,7 @@ export default class Donate extends Actor {
         super({name}, map);
         this.pos.x =  path;
         this.pos.y = hight;
-        this.speed.x = 8;
+        this.speed.x = 35;
         this.acc = {x: 0.5, y: -4};
         this.move(-1);
     }

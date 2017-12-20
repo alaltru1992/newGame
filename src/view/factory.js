@@ -11,6 +11,8 @@ import DonateV from "./donate";
 import DonateM from "../model/donate";
 import NavalniyV from "./navalniy";
 import NavalniyM from "../model/navalniy";
+import ShotV from "./shot";
+import ShotM from "../model/shot";
 
 
 
@@ -30,9 +32,20 @@ export default class Factory {
             return null;
         }
         else if(model instanceof KozakM) {
-            return new KozakV(model, this.game,{runs: ["res/kozak.jpg","res/kozak.jpg","res/kozak.jpg","res/kozak.jpg",
-                "res/kozak.jpg","res/kozak.jpg" ], jump:{up:"res/kozak.jpg", fall :"res/kozak.jpg"},
-          stand:"res/kozak.jpg", name: "newkazak"});
+            if(model.hit === 0) {
+                return new KozakV(model, this.game, {
+                    runs: ["res/kozak.jpg", "res/kozak.jpg", "res/kozak.jpg", "res/kozak.jpg",
+                        "res/kozak.jpg", "res/kozak.jpg"], jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
+                    stand: "res/kozak.jpg", name: "newkazak"
+                });
+            }
+            else if(model.hit ===1){
+                return new KozakV(model, this.game, {
+                    runs: ["res/bang.png", "res/bang.png", "res/bang.png", "res/bang.png",
+                        "res/bang.png", "res/bang.png"], jump: {up: "res/bang.png", fall: "res/bang.png"},
+                    stand: "res/bang.png", name: "newkazak"
+                });
+            }
         }
         else if(model instanceof StoneM) {
             return new StoneV(model, this.game,{runs: ["res/stone.jpg","res/stone.jpg","res/stone.jpg","res/stone.jpg",
@@ -48,6 +61,12 @@ export default class Factory {
             return new DonateV(model, this.game,{runs:["res/donate.png","res/donate.png","res/donate.png","res/donate.png",
                 "res/donate.png","res/donate.png" ] , jump:{up:"res/donate.png", fall :"res/donate.png"},
                 stand:"res/donate.png", name: "donate"});
+        }
+        else if(model instanceof ShotM) {
+            return new ShotV(model, this.game,{runs:["res/bang.png","res/bang.png","res/bang.png","res/bang.png",
+                "res/bang.png","res/bang.png" ] , jump:{up:"res/bang.png", fall :"res/bang.png"},
+                stand:"res/bang.png", name: "shot"});
+
         }
     }
 }

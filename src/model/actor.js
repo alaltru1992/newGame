@@ -4,9 +4,9 @@ const gl = 200;
 
 export default class Actor {
 
-    constructor({name}, map,shotM) {
+    constructor({name},map) {
         this.name = name;
-        this.shotM = shotM;
+       // this.shotM = shotM;
         //this.speed = 5;
         this.pos = {x: 0, y: gl};
         this.direction = {x:0, y:0};
@@ -23,6 +23,9 @@ export default class Actor {
     }
 
     tick() {
+       // for (let i = 0; this.advantages.length; i++){
+         //   this.advantages[i].affect(this);
+        //}
         Math.abs(this.speed.x) < 0.5 && (this.speed.x = 0);
         let airacc = -this.speed.x * 0.3;
         this.speed.x = this.speed.x + this.direction.x * this.acc.x + airacc;
@@ -42,7 +45,7 @@ export default class Actor {
 
        // console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
        //   console.log(this.name, this.width);
-       // console.log(this.life);
+       // console.log(this.life);*/
     }
 
     turnover(){
@@ -57,9 +60,7 @@ export default class Actor {
       // this.direction.y = 0;
       // this.speed.y = Math.max(0,this.speed.y);
     }
-    actorShoot(){
-        this.map.push(this.shotM);
-    }
+
 
 
 

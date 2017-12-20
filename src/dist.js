@@ -19,15 +19,19 @@ import DonateModel from "./model/donate"
 import Factory from "./view/factory";
 import NavalniyModel from "./model/navalniy"
 import NavalniyView from "./view/navalniy";
-
+import Move from "./model/advantages/move";
 
 
 let map = [];
 let mapV = [];
+let ShotArr = [];
 
-let shotM = new ShotModel({name:"shot"},map);
-let actorM = new NavalniyModel({name: "naval'niy"},map,shotM);
+
+let actorM = new NavalniyModel({name: "naval'niy"},map);
 let gameM = new GameModel(actorM,map);
+
+let moveAdv = new Move(actorM,map);
+actorM.advantages.push(moveAdv);
 
 
 
@@ -69,19 +73,20 @@ for (let j =0 ; j < 50; j++) {
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...ShotArr);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
-//let main = new ActorCont({name: "main"}, map);
+let main = new ActorCont({name: "main"}, map);
 
 
 //console.log(map[0]);
 
-let LBar = new BarView(actorM,{name:"lifebar",settings:{x:10,y:10,width:100}});
+let LBar = new BarView(actorM,{name:"lifebar",settings:{x:15,y:15,width:100}});
+let LoadBar = new BarLoadView(actorM,{name:"loadbar",settings:{x:0, y: 55, width: 20}})
 
 
 const factoryV = new Factory(gameM,actorM);
-let ActorC = new ActorController(actorM,);
+let ActorC = new ActorController(actorM,map);
 
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 
@@ -92,23 +97,29 @@ let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroun
 
 app.ticker.add(function(delta) {
 
-    [...map].forEach(elm => elm.tick());
 
-    /* for(let i = 0; i < map.length; i++) {
+      [...map].forEach(elm => elm.tick());
+    // map.forEach(elem => elem.advantages[0].affect(gameM));
 
-         let adv = map[i].advantages;
-         for(let k = 0; k < map.length; k++ ) {
+    for (let i = 0; i < map.length; i++) {
+        for (let k = 0; k < map.length; k++) {
+            main.interaction(map[i], map[k]);
 
-         }*/
-   // map.forEach(model =>  addView(model,actorM,mapV,factoryV));
-    //находится в вне зоны действия
-    //mapV.forEach(view => removeView(view,actorM,mapV));
+        }
+    }
+        // map.forEach(model =>  addView(model,actorM,mapV,factoryV));
+        //находится в вне зоны действия
+        //  mapV.forEach(view => removeView(view,actorM,mapV));
+
 });
-
+mapV.push(LBar);
+mapV.push(LoadBar);
     map.forEach(model =>  addView(model,gameM,mapV,factoryV));
     //находится в вне зоны действия
         mapV.forEach(view => removeView(view,gameM,mapV));
         app.stage.addChild(LBar.gr);
+        app.stage.addChild(LoadBar.gr);
+
 
     (function frame() {
         requestAnimationFrame(frame);
@@ -121,7 +132,7 @@ app.ticker.add(function(delta) {
     });
 
 function addView(model, gameM, mapV, factoryV){
-    if (Math.abs(gameM.pos.x - model.pos.x) < 2000) {
+    if (Math.abs(gameM.pos.x - model.pos.x) < 200000) {
         //если виюха еще не создана
         if (model.viewCreated === false) {
             let view =  factoryV.createActor(model);
@@ -136,7 +147,7 @@ function addView(model, gameM, mapV, factoryV){
 }
 
 function removeView(view,gameM,mapV){
-    if (Math.abs(gameM.pos.x - view.gr.x) > 2600) {
+    if ((Math.abs(gameM.pos.x - view.gr.x) > 2600)&&!( view instanceof BarView)) {
         mapV.splice(mapV.indexOf(view), 1);
         view.actor.viewCreated = false;
         app.stage.removeChild(view.gr);

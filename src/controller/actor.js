@@ -1,5 +1,5 @@
 import Fusilier from "../model/advantages/fusilier";
-
+import ShotM from "../model/shot";
 export default class Controller {
 
     /**
@@ -7,12 +7,13 @@ export default class Controller {
      * @param {Actor} model
      * @param view
      */
-    constructor(model, view) {
+    constructor(model,map) {
 
         /**
          * @type {Actor}
          */
         this.model = model;
+        this.map = map;
         window.addEventListener("keydown", e=>this.keydown(e.keyCode));
         window.addEventListener("keyup", e=>this.keyup(e.keyCode));
 
@@ -20,9 +21,12 @@ export default class Controller {
 
     keydown(keyCode) {
         this.model.move(keyCode - 38);
-        if(keyCode === "ctrl") {
-            const fusilier = this.model.advantages.find(adv => adv instanceof Fusilier);
-            fusilier && fusilier.action();
+        if(((keyCode-38)=== 30)&&(this.model.load === 4)) {
+           this.map.push(new ShotM({name:"shot"},this.model));
+           this.model.load = this.model.load/9;
+
+           // const fusilier = this.model.advantages.find(adv => adv instanceof Fusilier);
+            //fusilier && fusilier.action()&&fusilier.target();
         }
     }
 
@@ -34,6 +38,7 @@ export default class Controller {
         else if ([-6].includes(keyCode - 38)) {
             this.model.move(6);
         }
+
     }
 
 }
