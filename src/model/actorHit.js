@@ -24,10 +24,10 @@ export default class Hit extends Actor {
             else if ((model2 instanceof KozakM)&&(model2.hit ===0)) {
                 if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 50)) {
                     model1.life--;
+                    this.map =  this.map.slice(this.map.indexOf(model2));
                     model1.life = Math.max(model1.life, 0);
                     model2.hit = 1;
                     model2.size = {x:0,y:0};
-                  //  debugger;
                 }
             }
             else if ((model2 instanceof DonateM)&&(model2.hit ===0)) {
@@ -35,6 +35,7 @@ export default class Hit extends Actor {
                     model1.load++
                     model1.load = Math.min(model1.load, 4);
                     model2.hit = 1;
+                    this.map =  this.map.slice(this.map.indexOf(model2));
                     model2.size = {x:0,y:0};
                 }
             }
@@ -70,8 +71,10 @@ export default class Hit extends Actor {
                     model1.life--;
                     model1.life = Math.max(model1.life, 0);
                     model2.hit = 1;
+                    this.map =  this.map.slice(this.map.indexOf(model2));
+                    this.map =  this.map.slice(this.map.indexOf(model1));
                     model2.size = {x:0,y:0};
-
+                    model1.size = {x:0,y:0};
                 }
             }
         }

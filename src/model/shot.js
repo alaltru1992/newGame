@@ -2,7 +2,7 @@ import Actor from "./actor";
 
 export default class Shot extends Actor {
 
-    constructor({name},actor) {
+    constructor({name},actor,direction,speedIndex) {
         super(name);
         this.actor = actor;
         this.speed.x = 100;
@@ -13,6 +13,8 @@ export default class Shot extends Actor {
         this.name = {name};
         this.life = 3;
         this.pos.x = this.actor.pos.x;
+        this.direction = direction;
+        this.speedIndex = speedIndex;
 
     }
     tick(){
@@ -20,8 +22,8 @@ export default class Shot extends Actor {
         if (dir ===0){
             dir = 1;
         }
-            this.pos.x +=(this.speed.x - this.actor.speed.x)*dir;
-     //   this.pos.y = this.actor.pos.y;
+            this.pos.x +=(this.speed.x*this.speedIndex - this.actor.speed.x)*dir;
+            this.pos.y = this.actor.pos.y*this.direction;
 
     }
 

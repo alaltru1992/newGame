@@ -16,14 +16,20 @@ export default class Controller {
         this.map = map;
         window.addEventListener("keydown", e=>this.keydown(e.keyCode));
         window.addEventListener("keyup", e=>this.keyup(e.keyCode));
+        this.shotcounter = 0;
+
 
     }
 
     keydown(keyCode) {
         this.model.move(keyCode - 38);
-        if(((keyCode-38)=== 30)&&(this.model.load === 4)) {
-           this.map.push(new ShotM({name:"shot"},this.model));
-           this.model.load = this.model.load/9;
+        if(((keyCode-38)=== 30)&&(this.model.load === 4)&&(this.shotcounter < 8)) {
+           this.map.push(new ShotM({name:"shot"},this.model,1,1));
+           this.shotcounter++;
+            if (this.shotcounter === 8){
+               this.model.load = 0;
+               this.shotcounter = 0;
+            }
 
            // const fusilier = this.model.advantages.find(adv => adv instanceof Fusilier);
             //fusilier && fusilier.action()&&fusilier.target();

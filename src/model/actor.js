@@ -6,8 +6,6 @@ export default class Actor {
 
     constructor({name},map) {
         this.name = name;
-       // this.shotM = shotM;
-        //this.speed = 5;
         this.pos = {x: 0, y: gl};
         this.direction = {x:0, y:0};
         this.speed = {x: 0, y: 0};

@@ -61,12 +61,15 @@ export default class Factory {
             return new DonateV(model, this.game,{runs:["res/donate.png","res/donate.png","res/donate.png","res/donate.png",
                 "res/donate.png","res/donate.png" ] , jump:{up:"res/donate.png", fall :"res/donate.png"},
                 stand:"res/donate.png", name: "donate"});
+
         }
         else if(model instanceof ShotM) {
             return new ShotV(model, this.game,{runs:["res/bang.png","res/bang.png","res/bang.png","res/bang.png",
                 "res/bang.png","res/bang.png" ] , jump:{up:"res/bang.png", fall :"res/bang.png"},
                 stand:"res/bang.png", name: "shot"});
+          //console.log("true");
 
         }
+
     }
 }

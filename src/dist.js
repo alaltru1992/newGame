@@ -24,7 +24,7 @@ import Move from "./model/advantages/move";
 
 let map = [];
 let mapV = [];
-let ShotArr = [];
+let shotArr=[];
 
 
 let actorM = new NavalniyModel({name: "naval'niy"},map);
@@ -73,7 +73,7 @@ for (let j =0 ; j < 50; j++) {
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...ShotArr);
+map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...shotArr);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
 let main = new ActorCont({name: "main"}, map);
@@ -90,41 +90,41 @@ let ActorC = new ActorController(actorM,map);
 
 let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroundColor : 0x1099bb});
 
-/*[gameV, actorV,...kozakVArr,...stoneVArr]mapV.forEach(elm => {
-    app.stage.addChild(elm.gr);
-});*/
 
 
+mapV.push(LBar);
+mapV.push(LoadBar);
 app.ticker.add(function(delta) {
 
 
       [...map].forEach(elm => elm.tick());
-    // map.forEach(elem => elem.advantages[0].affect(gameM));
+
 
     for (let i = 0; i < map.length; i++) {
         for (let k = 0; k < map.length; k++) {
             main.interaction(map[i], map[k]);
-
         }
     }
-        // map.forEach(model =>  addView(model,actorM,mapV,factoryV));
-        //находится в вне зоны действия
-        //  mapV.forEach(view => removeView(view,actorM,mapV));
+
+
+
+    map.forEach(model =>  addView(model,gameM,mapV,factoryV));
 
 });
-mapV.push(LBar);
-mapV.push(LoadBar);
-    map.forEach(model =>  addView(model,gameM,mapV,factoryV));
-    //находится в вне зоны действия
+
+
         mapV.forEach(view => removeView(view,gameM,mapV));
-        app.stage.addChild(LBar.gr);
-        app.stage.addChild(LoadBar.gr);
+
+
+
+
 
 
     (function frame() {
         requestAnimationFrame(frame);
-        /* [actorV, gameV,...kozakVArr,...stoneVArr]*/
         mapV.forEach(elm => elm.render());
+        app.stage.addChild(LBar.gr);
+        app.stage.addChild(LoadBar.gr);
     })();
 
     window.addEventListener("load", () => {
@@ -138,6 +138,7 @@ function addView(model, gameM, mapV, factoryV){
             let view =  factoryV.createActor(model);
             if (view) {
                 mapV.push(view);
+
                 model.viewCreated = true;
                 app.stage.addChild(view.gr);
             }
