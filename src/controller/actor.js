@@ -23,7 +23,7 @@ export default class Controller {
 
     keydown(keyCode) {
         this.model.move(keyCode - 38);
-        if(((keyCode-38)=== 30)&&(this.model.load === 4)&&(this.shotcounter < 8)) {
+        if(((keyCode-38)=== 30)/*&&(this.model.load === 4)&&(this.shotcounter < 8)*/) {
            this.map.push(new ShotM({name:"shot"},this.model,1,1));
            this.shotcounter++;
             if (this.shotcounter === 8){

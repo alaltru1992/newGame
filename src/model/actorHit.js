@@ -9,6 +9,7 @@ import DonateM from "../model/donate";
 
 import NavalniyM from "../model/navalniy";
 import ShotM from "../model/shot";
+import UsmanovM from "../model/usmanov";
 
 export default class Hit extends Actor {
 
@@ -38,32 +39,14 @@ export default class Hit extends Actor {
                     this.map =  this.map.slice(this.map.indexOf(model2));
                     model2.size = {x:0,y:0};
                 }
+
+            }
+            else if ((model2 instanceof UsmanovM)) {
+                if ((Math.abs(model1.pos.x - model2.pos.x) < 150) && (Math.abs(model1.pos.y - model2.pos.y) < 450)&&(model2.life>0)) {
+                    model1.life--;
+                }
             }
 
-            /*    for (let i = 2; i < this.map.length; i++) {
-                    if (this.map[i].name === "newkazak") {
-                        if ((Math.abs(this.map[1].pos.x - this.map[i].pos.x) < 50) && (Math.abs(this.map[1].pos.y - this.map[i].pos.y) < 50)) {
-                            this.map[1].life--;
-                            this.map[1].life = Math.max(this.map[1].life,0);
-                            this.map[i].name = "neutral";
-                            this.map[i].hit = 1;
-
-                        }
-                    }
-                    else if (this.map[i].name === "stone") {
-                        if ((Math.abs(this.map[1].pos.x - this.map[i].pos.x) < 160) && this.map[1].pos.y> 300) {
-                            this.map[1].onStoneJump();
-                        }
-                    }
-                    else if(this.map[i].name === "donate"){
-                        if ((Math.abs(this.map[1].pos.x - this.map[i].pos.x) < 50) && (Math.abs(this.map[1].pos.y - this.map[i].pos.y) < 50)) {
-                            this.map[1].load++;
-                            this.map[1].life = Math.min(this.map[1].life,4);
-                            this.map[i].name = "neutral";
-                            this.map[i].hit = 2;
-                        }
-                    }
-                }*/
         }
         else if(model1 instanceof ShotM){
          if ((model2 instanceof KozakM)&&(model2.hit ===0)) {
@@ -75,6 +58,14 @@ export default class Hit extends Actor {
                     this.map =  this.map.slice(this.map.indexOf(model1));
                     model2.size = {x:0,y:0};
                     model1.size = {x:0,y:0};
+                }
+            }
+           else if ((model2 instanceof UsmanovM)) {
+                if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 500)&&(model1.life === 3)) {
+                    model2.life --;
+                    model1.hit = 1;
+                    model1.size = {x:0,y:0};
+                    this.map =  this.map.slice(this.map.indexOf(model1));
                 }
             }
         }

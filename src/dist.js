@@ -20,6 +20,7 @@ import Factory from "./view/factory";
 import NavalniyModel from "./model/navalniy"
 import NavalniyView from "./view/navalniy";
 import Move from "./model/advantages/move";
+import UsmanovModel from "./model/usmanov";
 
 
 let map = [];
@@ -28,7 +29,8 @@ let shotArr=[];
 
 
 let actorM = new NavalniyModel({name: "naval'niy"},map);
-let gameM = new GameModel(actorM,map);
+let usmanovM = new UsmanovModel({name:"usmanov"},map,actorM);
+let gameM = new GameModel(actorM,usmanovM);
 
 let moveAdv = new Move(actorM,map);
 actorM.advantages.push(moveAdv);
@@ -73,7 +75,8 @@ for (let j =0 ; j < 50; j++) {
 
 
 
-map.push(gameM,actorM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...shotArr);
+map.push(gameM,actorM,usmanovM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...shotArr);
+console.log(map);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
 
 let main = new ActorCont({name: "main"}, map);

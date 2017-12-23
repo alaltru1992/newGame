@@ -13,6 +13,8 @@ import NavalniyV from "./navalniy";
 import NavalniyM from "../model/navalniy";
 import ShotV from "./shot";
 import ShotM from "../model/shot";
+import UsmanovV from "./usmanov";
+import UsmanovM from "../model/usmanov";
 
 
 
@@ -67,8 +69,13 @@ export default class Factory {
             return new ShotV(model, this.game,{runs:["res/bang.png","res/bang.png","res/bang.png","res/bang.png",
                 "res/bang.png","res/bang.png" ] , jump:{up:"res/bang.png", fall :"res/bang.png"},
                 stand:"res/bang.png", name: "shot"});
-          //console.log("true");
-
+        }
+        else if(model instanceof UsmanovM) {
+            return new UsmanovV(model, this.game, {
+                runs: ["res/usmanov.png", "res/usmanov.png", "res/usmanov.png", "res/usmanov.png",
+                    "res/usmanov.png", "res/usmanov.png"], jump: {up: "res/usmanov.png", fall: "res/usmanov.png"},
+                stand: "res/usmanov.png", name: "usmanov"
+            });
         }
 
     }
