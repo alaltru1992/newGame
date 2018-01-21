@@ -5,6 +5,8 @@ export default class Advantage {
         this.actor = actor;
     }
 
+    tick() {}
+
     action() { }
 
     affect(actor) { }

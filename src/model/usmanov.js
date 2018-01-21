@@ -20,25 +20,24 @@ export default class Usmanov extends Actor {
         this.move(-1);
         this.viewCreated = false;
         this.gameStop = 1;
-        this.shotDir = Math.sin(Math.floor(Math.random()));
-        this.shotSpeedIndex = Math.floor(Math.random() * (3.5 - 0.3 + 1)) + 0.3;
-        this.shotFrequency = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
+       // this.shotDir = Math.sin(Math.floor(Math.random()));
+      //  this.shotSpeedIndex = Math.floor(Math.random() * (3.5 - 0.3 + 1)) + 0.3;
+       // this.shotFrequency = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
 
     }
 
     tick() {
-
-        if ((Math.abs(this.pos.x - this.actor.pos.x) < 500)&&(this.life > 0)) {
+        if ((Math.abs(this.pos.x - this.actor.pos.x) < 650)&&(this.life > 0)) {
             this.gameStop = 0;
-            while(this.life > 0){
-                this.map.push(new ShotM({name:"shot"},this,this.shotDir,this.shotSpeedIndex))
-            }
         }
         if(this.life ===0){
             this.gameStop = 1;
             this.size = {x:0,y:0};
         }
-
-
     }
+
+    action (){
+       this.action = true;
+    }
+
 }

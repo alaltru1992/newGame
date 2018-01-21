@@ -1,7 +1,7 @@
 export default class Bar {
 
     constructor(actor,{name, settings: {
-        x = 10, y = 10, width = 100
+        x = 100, y = 10, width = 100
     } = {}}){
         this.x = 15;
         this.y = 15;

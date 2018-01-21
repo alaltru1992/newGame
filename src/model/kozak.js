@@ -7,9 +7,14 @@ export default class Kozak extends Actor {
         this.pos.x =  distance;
         this.speed.x = 4;
         this.acc = {x: 0.5, y: -4};
-        //setInterval(() => { this.move((Math.random() * 3 | 0)-1 )}, 5000);
-       // setInterval(() => { this.move(-1)}, 5000);
         this.move(-1);
+        this.life = 1;
+    }
+    tick(){
+        this.pos.x -=this.speed.x;
+        if(this.life < 1){
+            this.size = {x:0,y:0};
+        }
     }
 
 }

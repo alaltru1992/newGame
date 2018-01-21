@@ -4,7 +4,7 @@ const gl = 200;
 
 export default class Actor {
 
-    constructor({name},map) {
+    constructor({name, advantages = []},map) {
         this.name = name;
         this.pos = {x: 0, y: gl};
         this.direction = {x:0, y:0};
@@ -15,7 +15,7 @@ export default class Actor {
         this.size = {x: 1, y: 1};
         this.hit = 0;
         this.life = 3;
-        this.advantages = [];
+        this.advantages = advantages;
         this.load = 0;
         this.viewCreated = false;
     }
@@ -32,7 +32,7 @@ export default class Actor {
         if((this.direction.y === -6)&&(this.speed.y ===0)){
             this.speed.y = 40.1;
         }
-        else if((this.pos.y === gl)||(this.pos.y === 350)) {
+        else if((this.pos.y === gl)||(this.pos.y === 350)||(this.pos.y === 300)) {
             this.speed.y = 0;
         }
         else {
@@ -41,9 +41,9 @@ export default class Actor {
         this.pos.y = this.pos.y + this.speed.y+ this.acc.y/2;
         this.pos.y = Math.max(this.pos.y,gl);
 
-       // console.log(this.name + " " + JSON.stringify({pos: this.pos, speed: this.speed}));
-       //   console.log(this.name, this.width);
-       // console.log(this.life);*/
+
+        this.advantages.map($ => $.tick());
+       // this.advantages.map($ => $.props.map($ => $.tick()));
     }
 
     turnover(){

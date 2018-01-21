@@ -9,6 +9,7 @@ export default class Stone extends Actor {
         this.acc = {x: 0, y: 0};
         this.pos.y = 250;
         this.size = {x: 4, y: 0.5};
+        this.life = 0;
     }
 
 }
