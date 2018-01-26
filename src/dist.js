@@ -24,6 +24,11 @@ import PutinM from "./model/putin";
 import SignM from "./model/sign";
 import BusM from "./model/bus";
 import DoshikM from "./model/doshik";
+import WritingBarM from "./view/writingBar";
+import WritingLBarM from "./view/writingLBar";
+import WritingSBarM from "./view/writingSBar";
+import GrandM from "./model/grand";
+import GrandThr from "./model/advantages/grandthrow";
 
 let map = [];
 let mapV = [];
@@ -55,6 +60,14 @@ let distance = 1000;
 for(let i = 0;i<200; i++) {
     kozakMArr.push(new KozakModel({name: "newkazak"},distance, map));
     distance += Math.floor(Math.random()*800)+250;
+}
+
+let grandMArr = [];
+let gap = 80000;
+for(let i = 0;i<19; i++) {
+    grandMArr.push(new GrandM({name: "grand"},gap, map));
+    grandMArr[i].advantages.push(new GrandThr({snaryad: ShotNew, actor:grandMArr[i], map, game: gameM, aim: actorM}));
+    gap += Math.floor(Math.random()*800)+500;
 }
 let donateMArr = [];
 
@@ -92,8 +105,9 @@ boxMArr.push(new BoxM({name:"box"}, boxPos));
 
 
 
-map.push(gameM,actorM,usmanovM,buttonM,pamfilovaM,putinM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...shotArr,...boxMArr);
+map.push(gameM,actorM,usmanovM,buttonM,pamfilovaM,putinM,...kozakMArr,...stoneMArr/*,barM*//*barloadM*/,...donateMArr,...shotArr,...boxMArr,...grandMArr);
 //mapV.push(gameV,actorV,...kozakVArr,...stoneVArr, barV,...donateVArr,/*barloadV/*/);
+
 
 let main = new ActorCont({name: "main"}, map);
 
@@ -103,6 +117,9 @@ let main = new ActorCont({name: "main"}, map);
 let LBar = new BarView(actorM,{name:"lifebar",settings:{x:15,y:15,width:100}});
 let LoadBar = new BarLoadView(actorM,{name:"loadbar",settings:{x:0, y: 55, width: 15}});
 let SignatureBar = new SignatureView(actorM,{name:"signaturebar",settings:{x:0, y: 95, width: 15}});
+let WritingBar = new WritingBarM(actorM);
+let WritingLBar = new WritingLBarM(actorM);
+let WritingSBar = new WritingSBarM(actorM);
 
 
 const factoryV = new Factory(gameM,actorM);
@@ -113,6 +130,10 @@ let app = new PIXI.Application(window.innerWidth, window.innerHeight, {backgroun
 mapV.push(LBar);
 mapV.push(LoadBar);
 mapV.push(SignatureBar);
+mapV.push(WritingBar);
+mapV.push(WritingLBar);
+mapV.push(WritingSBar);
+
 
 
 let time = setInterval(function() {
@@ -144,23 +165,27 @@ let time5 = setInterval(function() {
     if (actorM.load === 4){
         actorM.load = 0;
     }
-}, 50000);
+}, 40000);
 
 let time6 = setInterval(function() {
-    if (actorM.life === 0){
-        GameModel.stopG = 1;
-       //mapV = [GameModel];
-      //  app = new PIXI.Application(PIXI.Texture.fromImage("res/fail.jpg"), window.innerWidth, window.innerHeight);
+    for(let i =0; i< grandMArr.length; i++) {
+        if (Math.abs(grandMArr[i].pos.x - actorM.pos.x) < 800) {
+            grandMArr.forEach(x =>x.advantages.forEach($ => $.tick()));
+        }
     }
-}, 1000);
+}, 2000);
+
 
 
 
 app.ticker.add(function(delta) {
+    /*if(actorM.life === 0){
+        mapV= [];
+        alert('you lost');
+    }*/
 
 
 
-  console.log(actorM.pos.y);
 
       [...map].forEach(elm => elm.tick());
 
@@ -188,10 +213,13 @@ app.ticker.add(function(delta) {
 
     (function frame() {
         requestAnimationFrame(frame);
-        mapV.forEach(elm => elm.render());
-        app.stage.addChild(LBar.gr);
-        app.stage.addChild(LoadBar.gr);
-        app.stage.addChild(SignatureBar.gr);
+            mapV.forEach(elm => elm.render());
+            app.stage.addChild(LBar.gr);
+            app.stage.addChild(LoadBar.gr);
+            app.stage.addChild(SignatureBar.gr);
+            app.stage.addChild(WritingBar.gr);
+            app.stage.addChild(WritingLBar.gr);
+            app.stage.addChild(WritingLBar.gr);
       //  mapV.forEach(view => removeView(view,gameM,mapV));
     })();
 
@@ -203,19 +231,18 @@ app.ticker.add(function(delta) {
     });
 
 function addView(model, gameM, mapV, factoryV){
-    if (Math.abs(gameM.pos.x - model.pos.x) < 3000) {
-        //если виюха еще не создана
-        if (model.viewCreated === false) {
-            let view =  factoryV.createActor(model);
-            if (view) {
-                mapV.push(view);
+        if (Math.abs(gameM.pos.x - model.pos.x) < 3000) {
+            //если виюха еще не создана
+            if (model.viewCreated === false) {
+                let view = factoryV.createActor(model);
+                if (view) {
+                    mapV.push(view);
 
-                model.viewCreated = true;
-                app.stage.addChild(view.gr);
+                    model.viewCreated = true;
+                    app.stage.addChild(view.gr);
+                }
             }
         }
-    }
-
 }
 
 function removeView(view,gameM,mapV){
@@ -225,4 +252,6 @@ function removeView(view,gameM,mapV){
         app.stage.removeChild(view.gr);
     }
 }
+
+
 

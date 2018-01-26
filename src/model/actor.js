@@ -14,7 +14,7 @@ export default class Actor {
         this.map = map;
         this.size = {x: 1, y: 1};
         this.hit = 0;
-        this.life = 3;
+        this.life = 4;
         this.advantages = advantages;
         this.load = 0;
         this.viewCreated = false;

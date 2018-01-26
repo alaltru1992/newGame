@@ -15,7 +15,7 @@ export default class Usmanov extends Actor {
         this.map = map;
         this.size = {x: 2, y: 2.5};
         this.hit = 0;
-        this.life = 3;
+        this.life = 20;
         this.advantages = [];
         this.move(-1);
         this.viewCreated = false;

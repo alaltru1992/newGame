@@ -7,8 +7,9 @@ export default class ShotNew extends Actor {
         !direction && (direction = 1);
         this.actor = actor;
         this.speed.x = direction * 100;
-        this.speed.y = 20;
+        this.speed.y = 1;
         this.viewCreated = false;
+        this.acc = {x:10,y:0.4};
         this.size = {x: 1, y: 1};
         this.pos.x = this.actor.pos.x;
         this.pos.y = this.actor.pos.y;
@@ -40,8 +41,15 @@ export default class ShotNew extends Actor {
         else if(this.diry ===3){
            // this.size = {x:1.5, y:1.5};
            this.pos.x += this.speed.x*0.2;//* 5*Math.random()+3;
-            this.pos.y -= Math.random()*Math.sin(Math.random()*Math.PI)-Math.random()*2;;
-         //  this.pos.y -= Math.floor(Math.random()*20)+5*Math.random()*Math.sin(Math.random()*Math.PI)-Math.random()*2;
+            this.pos.y -= Math.random()*Math.sin(Math.random()*Math.PI)-Math.random()*2;
+        }
+        else if(this.diry ===4){
+            // this.size = {x:1.5, y:1.5};
+           this.speed.x = 20;
+            this.pos.x -=this.speed.x;
+            this.pos.y += this.speed.y;
+            this.speed.y -=this.acc.y
+
         }
     }
 

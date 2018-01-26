@@ -29,6 +29,8 @@ import BusV from "./bus";
 import BusM from "../model/bus";
 import DoshikV from "./doshik";
 import DoshikM from "../model/doshik";
+import GrandV from "./grand";
+import GrandM from "../model/grand";
 
 
 export default class Factory {
@@ -41,7 +43,7 @@ export default class Factory {
 
         if (model instanceof GameM) {
             this.game = model;
-            return new GameV(model);
+               return new GameV(model);
         }
         else if (model instanceof Hit) {
             return null;
@@ -104,6 +106,13 @@ export default class Factory {
                     runs: ["res/paper.png", "res/paper.png", "res/paper.png", "res/paper.png",
                         "res/paper.png", "res/paper.png"], jump: {up: "res/paper.png", fall: "res/paper.png"},
                     stand: "res/paper.png", name: "shot"
+                });
+            }
+            else if (model.diry === 4) {
+                return new ShotV(model, this.game, {
+                    runs: ["res/potion.png", "res/potion.png", "res/potion.png", "res/potion.png",
+                        "res/potion.png", "res/potion.png"], jump: {up: "res/potion.png", fall: "res/potion.png"},
+                    stand: "res/potion.png", name: "shot"
                 });
             }
         }
@@ -178,6 +187,13 @@ export default class Factory {
                 runs: ["res/doshik.png", "res/doshik.png", "res/doshik.png", "res/doshik.png",
                     "res/doshik.png", "res/doshik.png"], jump: {up: "res/doshik.png", fall: "res/doshik.png"},
                 stand: "res/doshik.png", name: "doshik"
+            });
+        }
+        else if(model instanceof GrandM) {
+            return new DoshikV(model, this.game, {
+                runs: ["res/grand.png", "res/grand.png", "res/grand.png", "res/grand.png",
+                    "res/grand.png", "res/grand.png"], jump: {up: "res/grand.png", fall: "res/grand.png"},
+                stand: "res/grand.png", name: "grand"
             });
         }
     }

@@ -9,6 +9,7 @@ import UsmanovM from "../model/usmanov";
 import Box from "../model/box";
 import Sign from "../model/sign";
 import DoshikM from "../model/doshik";
+import GrandM from "../model/grand";
 
 
 export default class Hit extends Actor {
@@ -70,9 +71,17 @@ export default class Hit extends Actor {
             else if ((model2 instanceof DoshikM)) {
                 if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 50)&&(model2.life >0)) {
                     model1.life++;
-                    model1.life = Math.min(model1.life,3);
+                    model1.life = Math.min(model1.life,4);
                     model2.life = 0;
                     this.map.splice(this.map.indexOf(model2),1);
+
+                }
+            }
+            else if ((model2 instanceof GrandM)) {
+                if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 50)&&(model2.life >0)) {
+                    model1.life--;
+                    model2.life = 0;
+                    //this.map.splice(this.map.indexOf(model2),1);
 
                 }
             }
