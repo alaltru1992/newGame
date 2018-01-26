@@ -7,8 +7,9 @@ import NavalniyM from "../model/navalniy";
 import ShotM from "../model/shot";
 import UsmanovM from "../model/usmanov";
 import Box from "../model/box";
-import Button from "../model/button";
-import MessageM from "../model/message";
+import Sign from "../model/sign";
+import DoshikM from "../model/doshik";
+
 
 export default class Hit extends Actor {
 
@@ -35,7 +36,7 @@ export default class Hit extends Actor {
                     model1.load++;
                     model1.load = Math.min(model1.load, 4);
                     model2.hit = 1;
-                    this.map =  this.map.slice(this.map.indexOf(model2));
+                    this.map.splice(this.map.indexOf(model2),1);
                     model2.size = {x:0,y:0};
                 }
 
@@ -56,7 +57,22 @@ export default class Hit extends Actor {
                 }
                 else if ((Math.abs(model1.pos.x - model2.pos.x) < 70) && (model1.pos.y > 250)&& (model1.direction.y !== -6)) {
                     model1.pos.y = Math.max(model1.pos.y, 300);
-                   // model1.speed.y = 0;
+                }
+            }
+            else if ((model2 instanceof Sign)) {
+                if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 50)&&(model2.life>0)) {
+                    model1.sg++;
+                    model2.life = 0;
+                    model2.size = {x:0,y:0};
+                    this.map.splice(this.map.indexOf(model2),1);
+                }
+            }
+            else if ((model2 instanceof DoshikM)) {
+                if ((Math.abs(model1.pos.x - model2.pos.x) < 50) && (Math.abs(model1.pos.y - model2.pos.y) < 50)&&(model2.life >0)) {
+                    model1.life++;
+                    model1.life = Math.min(model1.life,3);
+                    model2.life = 0;
+                    this.map.splice(this.map.indexOf(model2),1);
 
                 }
             }

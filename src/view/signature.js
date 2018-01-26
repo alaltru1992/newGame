@@ -1,24 +1,23 @@
-export default class Bar {
+export default class BarLoad {
 
     constructor(actor,{name, settings: {
-        x = 100, y = 10, width = 100
+        x = 10, y = 10, width = 100
     } = {}}){
-        this.x = 15;
+        this.x = 0;
         this.y = 15;
-        this.width = 100;
+        this.width = 20;
         this.actor = actor;
         this.name = name;
         this.gr = new PIXI.Graphics();
-        this.gr.beginFill(0xFF3300);
+        this.gr.beginFill(0xADFF2F);
         this.gr.drawRect(x , y, width, 35);
         this.gr.endFill();
-        this.viewCreated = false;
 
 
     }
     render(){
         const {actor} = this;
-        this.gr.scale.x = actor.life / 3;
+        this.gr.scale.x = actor.sg * 3;
     }
 
 }

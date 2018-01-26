@@ -7,7 +7,7 @@ export default class Usmanov extends Actor {
         super(name, map);
         this.actor = actor;
         this.name = name;
-        this.pos = {x: 2000, y: 600};
+        this.pos = {x: 35000, y: 600};
         this.direction = {x: -1, y: 0};
         this.speed = {x: 0, y: 0};
         this.acc = {x: 0, y: 0};

@@ -7,7 +7,8 @@ export default class Game {
 
     render() {
 
-        this.gr.tilePosition.x = -this.game.pos.x % 2600;
+            this.gr.tilePosition.x = -this.game.pos.x % 2600;
+
 
     }
 

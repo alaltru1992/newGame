@@ -3,8 +3,6 @@ import KozakV from "./kozak";
 import KozakM from "../model/kozak";
 import StoneV from "./stone";
 import StoneM from "../model/stone";
-import ActorV from "./actor";
-import ActorM from "../model/actor";
 import GameV from "./game";
 import GameM from "../model/game";
 import DonateV from "./donate";
@@ -23,7 +21,14 @@ import ButtonV from "./button";
 import ButtonM from "../model/button";
 import MessageV from "./message";
 import MessageM from "../model/message";
-
+import PutinV from "./putin";
+import PutinM from "../model/putin";
+import SignV from "./sign";
+import SignM from "../model/sign";
+import BusV from "./bus";
+import BusM from "../model/bus";
+import DoshikV from "./doshik";
+import DoshikM from "../model/doshik";
 
 
 export default class Factory {
@@ -146,6 +151,34 @@ export default class Factory {
                     stand: "res/butSent.png", name: "button"
                 });
             }
+        }
+        else if(model instanceof PutinM) {
+            return new PutinV(model, this.game, {
+                runs: ["res/putin.png", "res/putin.png", "res/putin.png", "res/putin.png",
+                    "res/putin.png", "res/putin.png"], jump: {up: "res/putin.png", fall: "res/putin.png"},
+                stand: "res/putin.png", name: "putin"
+            });
+        }
+        else if(model instanceof SignM) {
+            return new SignV(model, this.game, {
+                runs: ["res/sg.png", "res/sg.png", "res/sg.png", "res/sg.png",
+                    "res/sg.png", "res/sg.png"], jump: {up: "res/sg.png", fall: "res/sg.png"},
+                stand: "res/sg.png", name: "sign"
+            });
+        }
+        else if(model instanceof BusM) {
+            return new BusV(model, this.game, {
+                runs: ["res/bus.jpg", "res/bus.jpg", "res/bus.jpg", "res/bus.jpg",
+                    "res/bus.jpg", "res/bus.jpg"], jump: {up: "res/bus.jpg", fall: "res/bus.jpg"},
+                stand: "res/bus.jpg", name: "bus"
+            });
+        }
+        else if(model instanceof DoshikM) {
+            return new DoshikV(model, this.game, {
+                runs: ["res/doshik.png", "res/doshik.png", "res/doshik.png", "res/doshik.png",
+                    "res/doshik.png", "res/doshik.png"], jump: {up: "res/doshik.png", fall: "res/doshik.png"},
+                stand: "res/doshik.png", name: "doshik"
+            });
         }
     }
 }

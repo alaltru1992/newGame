@@ -18,8 +18,7 @@ export default class ShotNew extends Actor {
         this.xymove = Math.random();
         this.randY = Math.floor(Math.random() * 2);
     }
-
-    tick() {
+    tick(){
 
         if (this.diry === 0) {
             this.pos.x += this.speed.x;
@@ -37,6 +36,12 @@ export default class ShotNew extends Actor {
             else if(this.randY === 1){
                 this.pos.y = 350;
             }
+        }
+        else if(this.diry ===3){
+           // this.size = {x:1.5, y:1.5};
+           this.pos.x += this.speed.x*0.2;//* 5*Math.random()+3;
+            this.pos.y -= Math.random()*Math.sin(Math.random()*Math.PI)-Math.random()*2;;
+         //  this.pos.y -= Math.floor(Math.random()*20)+5*Math.random()*Math.sin(Math.random()*Math.PI)-Math.random()*2;
         }
     }
 

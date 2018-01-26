@@ -1,14 +1,15 @@
 import Advantage from "./advantage";
-import Interaction from "./interaction";
+import Intboss from "./interactionPutin";
 
 
-export default class Fusilier extends Advantage {
+export default class SignFlow extends Advantage {
 
-    constructor({snaryad, actor, map,game}) {
+    constructor({snaryad, actor, map,game,aim}) {
         super({actor, map});
         this.snaryad = snaryad;
-        this.type = "shot";
+        this.type = "shotboss";
         this.game = game;
+        this.aim = aim;
     }
 
     action(args) {
@@ -17,12 +18,13 @@ export default class Fusilier extends Advantage {
 
     tick() {
         if(this._action) {
-            let snaryad = new this.snaryad({diry:0,
+            let snaryad = new this.snaryad({diry:3,
                 actor: this.actor
             });
-            let property = new Interaction({source: this.actor, actor: snaryad, map: this.map, game: this.game});
+            let property = new Intboss({aim:this.aim,actor:snaryad,game:this.game});
             snaryad.props.push( property);
             this.map.push(snaryad);
+
             this._action = false;
         }
     }

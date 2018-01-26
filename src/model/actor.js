@@ -18,6 +18,7 @@ export default class Actor {
         this.advantages = advantages;
         this.load = 0;
         this.viewCreated = false;
+        this.sg = 0;
     }
 
     tick() {
