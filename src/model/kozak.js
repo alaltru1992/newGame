@@ -9,6 +9,7 @@ export default class Kozak extends Actor {
         this.acc = {x: 0.5, y: 0};
         this.move(-1);
         this.life = 1;
+        this.advantages = [];
     }
     tick(){
         this.pos.x -=this.speed.x;

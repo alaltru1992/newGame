@@ -24,16 +24,15 @@ export default class Pamfilova extends Actor {
     }
 
     tick() {
-        if ((Math.abs(this.pos.x - this.actor.pos.x) < 650)&&(this.life > 0)) {
+
+        if ((Math.abs(this.pos.x - this.actor.pos.x) < 650) && (this.life > 0)) {
             this.gameStop = 0;
         }
-        if(this.button.bosskill ===0){
+        if (this.button.bosskill === 0) {
             this.gameStop = 1;
-            this.size = {x:0,y:0};
+            this.size = {x: 0, y: 0};
             this.life = 0;
         }
-
-
     }
 
     action (){

@@ -7,6 +7,7 @@ export default class Actor {
         this.actor = actor;
         this.game = game;
         this.gr = new PIXI.Sprite(PIXI.Texture.fromImage(stand));
+        this.gr.name = name;
         this.gr.scale = {x: 0.15 * this.actor.size.x, y: 0.15 * this.actor.size.y};
         this.gr.anchor = {x: 0.5, y: 0};
         this.direction = 0;

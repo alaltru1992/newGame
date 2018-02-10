@@ -19,6 +19,7 @@ export default class Actor {
         this.load = 0;
         this.viewCreated = false;
         this.sg = 0;
+        this.dest = false;
     }
 
     tick() {

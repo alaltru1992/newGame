@@ -29,6 +29,9 @@ import WritingLBarM from "./view/writingLBar";
 import WritingSBarM from "./view/writingSBar";
 import GrandM from "./model/grand";
 import GrandThr from "./model/advantages/grandthrow";
+import DestroyM from "./model/advantages/destroy";
+import KozakHitM from "./model/advantages/kozakHit";
+
 
 let map = [];
 let mapV = [];
@@ -44,6 +47,8 @@ let gameM = new GameModel(actorM,usmanovM,pamfilovaM,putinM);
 
 
 actorM.advantages.push(new Fusilier({snaryad: ShotNew, actor: actorM, map, game:gameM}));
+//actorM.advantages.push(new KozakHitM( actorM,map));
+//actorM.advantages.push(new DestroyM( actorM,map));
 usmanovM.advantages.push(new ShotBoss({snaryad: ShotNew, actor: usmanovM, map, game: gameM, aim: actorM}));
 pamfilovaM.advantages.push(new ShotBoss2({snaryad: ShotNew, actor: pamfilovaM, map, game: gameM, aim: actorM}));
 buttonM.advantages.push(new MesSent({snaryad: MessageM,actor: actorM, map: map, button: buttonM}));
@@ -59,6 +64,7 @@ let kozakMArr = [];
 let distance = 1000;
 for(let i = 0;i<200; i++) {
     kozakMArr.push(new KozakModel({name: "newkazak"},distance, map));
+    kozakMArr[i].advantages.push(new DestroyM(kozakMArr[i],map));
     distance += Math.floor(Math.random()*800)+250;
 }
 
@@ -135,7 +141,6 @@ mapV.push(WritingLBar);
 mapV.push(WritingSBar);
 
 
-
 let time = setInterval(function() {
     if (usmanovM.gameStop === 0){
         usmanovM.advantages.forEach($=>$.action());
@@ -152,7 +157,7 @@ let time2 = setInterval(function() {
 
 let time3 = setInterval(function() {
     if (putinM.gameStop === 0){
-        map.push(new SignM({actor:putinM}));
+      //  map.push(new SignM({actor:putinM}));
     }
 }, 1800);
 
@@ -170,6 +175,7 @@ let time5 = setInterval(function() {
 let time6 = setInterval(function() {
     for(let i =0; i< grandMArr.length; i++) {
         if (Math.abs(grandMArr[i].pos.x - actorM.pos.x) < 800) {
+            grandMArr.forEach(x =>x.advantages.forEach($ => $.action()));
             grandMArr.forEach(x =>x.advantages.forEach($ => $.tick()));
         }
     }
@@ -178,59 +184,67 @@ let time6 = setInterval(function() {
 
 
 
-app.ticker.add(function(delta) {
-    /*if(actorM.life === 0){
-        mapV= [];
-        alert('you lost');
-    }*/
+    app.ticker.add(function(delta) {
+        /*if(actorM.life === 0){
+            mapV= [];
+            alert('you lost');
+        }*/
 
 
 
 
-      [...map].forEach(elm => elm.tick());
+          [...map].forEach(elm => elm.tick());
 
 
 
-    for (let i = 0; i < map.length; i++) {
-        for (let k = 0; k < map.length; k++) {
-            main.interaction(map[i], map[k]);
+        for (let i = 0; i < map.length; i++) {
+            for (let k = 0; k < map.length; k++) {
+                main.interaction(map[i], map[k]);
+            }
         }
-    }
-    map.forEach(model =>  addView(model,gameM,mapV,factoryV));
-    map.forEach(elem =>{
-        if (elem instanceof ShotNew){
-            elem.props.forEach(el => el.tick());
-        }
+    //    map.forEach(x => x.advantages.forEach($ => $.tick()));
+
+        map.forEach(elem =>{
+            if (elem instanceof ShotNew) {
+                elem.props.forEach(el => el.tick());
+            }
+        });
+
+        buttonM.advantages.forEach($ => $.tick());
+       // mapV.forEach(view => removeView(view,gameM,mapV));
     });
 
-    buttonM.advantages.forEach($ => $.tick());
-   // mapV.forEach(view => removeView(view,gameM,mapV));
-});
+
+    const menu = new PIXI.Container();
+    menu.addChild(LBar.gr);
+    menu.addChild(LoadBar.gr);
+    menu.addChild(SignatureBar.gr);
+    menu.addChild(WritingBar.gr);
+    menu.addChild(WritingLBar.gr);
+    menu.addChild(WritingLBar.gr);
 
 
+    const gameContainer = new PIXI.Container();
 
-      //  mapV.forEach(view => removeView(view,gameM,mapV));
+    app.stage.addChild(gameContainer);
+    app.stage.addChild(menu);
+
+
+      //  mapV.forEach(view => removeView(view,gameM,mapV))
 
     (function frame() {
         requestAnimationFrame(frame);
-            mapV.forEach(elm => elm.render());
-            app.stage.addChild(LBar.gr);
-            app.stage.addChild(LoadBar.gr);
-            app.stage.addChild(SignatureBar.gr);
-            app.stage.addChild(WritingBar.gr);
-            app.stage.addChild(WritingLBar.gr);
-            app.stage.addChild(WritingLBar.gr);
-      //  mapV.forEach(view => removeView(view,gameM,mapV));
+        map.forEach(model =>  addView(model,gameM,mapV,factoryV));
+        mapV.forEach(view => removeView( view, gameM, mapV) );
+        mapV.forEach(elm => elm.render());
     })();
-
-
 
 
     window.addEventListener("load", () => {
         document.body.appendChild(app.view);
     });
 
-function addView(model, gameM, mapV, factoryV){
+    function addView(model, gameM, mapV, factoryV){
         if (Math.abs(gameM.pos.x - model.pos.x) < 3000) {
             //если виюха еще не создана
             if (model.viewCreated === false) {
@@ -239,19 +253,18 @@ function addView(model, gameM, mapV, factoryV){
                     mapV.push(view);
 
                     model.viewCreated = true;
-                    app.stage.addChild(view.gr);
+                    gameContainer.addChild(view.gr);
                 }
             }
         }
-}
-
-function removeView(view,gameM,mapV){
-    if ((Math.abs(gameM.pos.x - view.gr.x) > 3000)||(Math.abs(gameM.pos.x - view.gr.x) === 3000)&&!( view instanceof BarView)&&!( view instanceof GameModel)) {
-        mapV.splice(mapV.indexOf(view),1);
-      //  view.actor.viewCreated = false;
-        app.stage.removeChild(view.gr);
     }
-}
+
+    function removeView( view, gameM, mapV ){
+        if(view.actor && ((gameM.pos.x - view.actor.pos.x > 3000) || !map.includes(view.actor))) {
+            mapV.splice(mapV.indexOf(view), 1);
+            gameContainer.removeChild(view.gr);
+        }
+    }
 
 
 

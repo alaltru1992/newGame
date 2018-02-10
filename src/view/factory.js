@@ -51,9 +51,9 @@ export default class Factory {
         else if (model instanceof KozakM) {
             if (model.hit === 0) {
                 return new KozakV(model, this.game, {
-                    runs: ["res/kozak.jpg", "res/kozak.jpg", "res/kozak.jpg", "res/kozak.jpg",
-                        "res/kozak.jpg", "res/kozak.jpg"], jump: {up: "res/kozak.jpg", fall: "res/kozak.jpg"},
-                    stand: "res/kozak.jpg", name: "newkazak"
+                    runs: ["res/kozak.png", "res/kozak.png", "res/kozak.png", "res/kozak.png",
+                        "res/kozak.png", "res/kozak.png"], jump: {up: "res/kozak.png", fall: "res/kozak.png"},
+                    stand: "res/kozak.png", name: "newkazak"
                 });
             }
             else if (model.hit === 1) {

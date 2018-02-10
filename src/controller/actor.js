@@ -24,7 +24,7 @@ export default class Controller {
 
     keydown(keyCode) {
 
-        if((keyCode === 68 /*D*/)&&(this.model.load=== 4)) {
+        if((keyCode === 68 /*D*/)/*&&(this.model.load=== 4)*/) {
             const adv = this.model.advantages.find( ({type}) => type === "shot" );
             adv.action();
         }

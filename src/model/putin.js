@@ -27,22 +27,22 @@ export default class Putin extends Actor {
     }
 
     tick() {
-        if ((Math.abs(this.pos.x - this.actor.pos.x) < 650)&&(this.life > 0)) {
-            this.gameStop = 0;
-        }
-        if(this.life ===0){
-            this.gameStop = 1;
-            this.size = {x:0,y:0};
-        }
 
-        if(this.gameStop === 0){
-            this.pos.x -=0.25;
-        }
-        if((Math.abs(this.pos.x - this.actor.pos.x) < 50)&&(this.life > 0)){
-            this.actor.life =0;
-          //  this.gameStop = 1;
-        }
+            if ((Math.abs(this.pos.x - this.actor.pos.x) < 650) && (this.life > 0)) {
+                this.gameStop = 0;
+            }
+            if (this.life === 0) {
+                this.gameStop = 1;
+                this.size = {x: 0, y: 0};
+            }
 
+            if (this.gameStop === 0) {
+                this.pos.x -= 0.25;
+            }
+            if ((Math.abs(this.pos.x - this.actor.pos.x) < 50) && (this.life > 0)) {
+                this.actor.life = 0;
+                //  this.gameStop = 1;
+            }
     }
 
     action (){
